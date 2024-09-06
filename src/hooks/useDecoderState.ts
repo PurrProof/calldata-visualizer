@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-interface UseDecoderState {
+interface IUseDecoderState {
   signature: string;
   setSignature: React.Dispatch<React.SetStateAction<string>>;
   calldata: string;
@@ -11,7 +11,7 @@ interface UseDecoderState {
   setError: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-const useDecoderState = (): UseDecoderState => {
+const useDecoderState = (): IUseDecoderState => {
   const [signature, setSignature] = useState<string>("");
   const [calldata, setCalldata] = useState<string>("");
   const [decodedData, setDecodedData] = useState<any | null>(null);

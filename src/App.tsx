@@ -60,7 +60,7 @@ const App = () => {
     if (!signature) return [];
     try {
       const iface = new ethers.Interface([signature]);
-      const func = iface.getFunction('swap');
+      const func = iface.getFunction(signature);
       return func ? func.inputs : [];
     } catch (error: any) {
       console.error('Error parsing function signature:', error);

@@ -1,13 +1,13 @@
 import { forwardRef, useImperativeHandle } from "react";
 
-interface Example {
+interface IExample {
   id: number;
   name: string;
   signature: string;
   calldata: string;
 }
 
-interface ExampleLoaderProps {
+interface IExampleLoaderProps {
   onLoadExample: (signature: string, calldata: string) => void;
 }
 
@@ -48,15 +48,15 @@ const examples = [
   }
 ];
 
-const ExampleLoader = forwardRef((props: ExampleLoaderProps, ref) => {
+const ExampleLoader = forwardRef((props: IExampleLoaderProps, ref) => {
   const { onLoadExample } = props;
 
-  const loadExample = (example: Example) => {
+  const loadExample = (example: IExample) => {
     onLoadExample(example.signature, example.calldata);
   };
 
   useImperativeHandle(ref, () => ({
-    loadExample: (example: Example) => loadExample(example),
+    loadExample: (example: IExample) => loadExample(example),
   }));
 
   return (

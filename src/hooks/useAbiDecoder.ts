@@ -1,23 +1,27 @@
 import { useCallback } from "react";
 import { ethers } from "ethers";
 
-interface DecodedData {
+interface IDecodedData {
   decoded: any;
   accum: {
     words: Map<number, any>;
   };
 }
 
-interface UseAbiDecoder {
-  decodeData: (signature: string, calldata: string) => DecodedData | null;
+interface IUseAbiDecoder {
+  decodeData: (signature: string, calldata: string) => IDecodedData | null;
 }
 
-const useAbiDecoder = (): UseAbiDecoder => {
+const useAbiDecoder = (): IUseAbiDecoder => {
   const decodeData = useCallback(
-    (signature: string, calldata: string): DecodedData | null => {
+    (signature: string, calldata: string): IDecodedData | null => {
       try {
         const iface = new ethers.Interface([signature]);
-        const decoded = iface.decodeFunctionData("swap", calldata);
+        const func = iface.getFunction(signature);
+        if (!func) {
+          throw Error("can't get function by signature");
+        }
+        const decoded = iface.decodeFunctionData(func, calldata);
         const accum =
           ethers.AbiCoder.defaultAbiCoder().getAccumulatedAbiWords();
         return { decoded, accum };

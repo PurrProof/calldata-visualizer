@@ -1,12 +1,12 @@
 import { useState } from "react";
 
-interface UseParamSelection {
+interface IUseParamSelection {
   selectedIds: number[];
   handleParamClick: (id: number) => void;
   resetSelection: () => void; // New function to reset the selection
 }
 
-const useParamSelection = (): UseParamSelection => {
+const useParamSelection = (): IUseParamSelection => {
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   const handleParamClick = (id: number) => {
