@@ -3,9 +3,7 @@ import InputFields from './components/InputFields';
 import Example from './components/ExampleLoader';
 import ParamTree from './components/ParamTree';
 import AbiWordList from './components/AbiWordList';
-import { assignIdsToParams } from './helpers/params';
-import { ethers } from 'ethers';
-
+import getParamsWithIds from './helpers/params';
 import useDecoderState from './hooks/useDecoderState';
 import useAbiDecoder from './hooks/useAbiDecoder';
 import useParamSelection from './hooks/useParamSelection';
@@ -25,51 +23,37 @@ const App = () => {
   } = useDecoderState();
 
   const { decodeData } = useAbiDecoder();
-  const { selectedIds, handleParamClick, resetSelection } = useParamSelection(); // Use resetSelection
+  const { selectedIds, handleParamClick, resetSelection } = useParamSelection();
 
-  const handleExampleLoad = useCallback(
-    (newSignature: string, newCalldata: string) => {
-      setSignature(newSignature);
-      setCalldata(newCalldata);
+  const decodeAndSetData = useCallback(
+    (signatureToDecode: string, calldataToDecode: string) => {
+      resetSelection();
       setDecodedData(null);
       setError(null);
-      resetSelection();
-
-      const result = decodeData(newSignature, newCalldata); // Decode data
+      const result = decodeData(signatureToDecode, calldataToDecode); // Decode data
       if (result) {
         setDecodedData(result);
       } else {
         setError('Decoding error');
       }
     },
-    [setSignature, setCalldata, setDecodedData, setError, decodeData, resetSelection]
+    [decodeData, setDecodedData, setError, resetSelection]
+  );
+
+  const handleExampleLoad = useCallback(
+    (newSignature: string, newCalldata: string) => {
+      setSignature(newSignature);
+      setCalldata(newCalldata);
+      decodeAndSetData(newSignature, newCalldata);
+    },
+    [setSignature, setCalldata, decodeAndSetData]
   );
 
   const handleDecodeClick = useCallback(() => {
-    resetSelection(); // Clear parameter selection
-    const result = decodeData(signature, calldata);
-    if (result) {
-      setDecodedData(result);
-    } else {
-      setError('Decoding error');
-    }
-  }, [decodeData, signature, calldata, setDecodedData, setError, resetSelection]);
+    decodeAndSetData(signature, calldata);
+  }, [decodeAndSetData, signature, calldata]);
 
-  // memoize functionParams and processedParams
-  const functionParams = useMemo(() => {
-    if (!signature) return [];
-    try {
-      const iface = new ethers.Interface([signature]);
-      const func = iface.getFunction(signature);
-      return func ? func.inputs : [];
-    } catch (error: any) {
-      console.error('Error parsing function signature:', error);
-      setError('Error parsing function signature: ' + error.message); // Set error if parsing fails
-      return [];
-    }
-  }, [signature, setError]);
-
-  const processedParams = useMemo(() => assignIdsToParams([...functionParams]), [functionParams]);
+  const processedParams = useMemo(() => getParamsWithIds(signature), [signature]);
 
   return (
     <div>
