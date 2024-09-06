@@ -1,0 +1,12 @@
+.param {
+  margin-left: 20px;
+  padding: 5px;
+  border: 2px solid #ddd;
+  margin-bottom: 0;
+  float: left;
+  cursor: pointer;
+}
+.param-list {
+  overflow: hidden;
+  margin-left: 40px;
+}

@@ -3,5 +3,3 @@ export interface IAbiWord {
   coders: number[];
   isIndex?: boolean;
 }
-
-export default IAbiWord;

@@ -1,5 +1,6 @@
 import React, { memo, useCallback } from "react";
 import ParamTree from "./ParamTree";
+import "./Param.css";
 
 export interface IParam {
   id: number;

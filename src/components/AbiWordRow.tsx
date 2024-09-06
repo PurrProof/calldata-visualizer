@@ -1,6 +1,7 @@
 import Bars from "./Bars";
-import IAbiWord from "./AbiWord";
+import { IAbiWord } from "../types/abi";
 import { hexlify } from "ethers";
+import "./AbiWordRow.css"
 
 interface IAbiWordRowProps {
   word: IAbiWord;

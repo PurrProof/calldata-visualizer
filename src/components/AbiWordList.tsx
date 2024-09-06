@@ -1,4 +1,4 @@
-import IAbiWord from "./AbiWord";
+import { IAbiWord } from "../types/abi";
 import AbiWordRow from "./AbiWordRow";
 
 interface IAbiWordListProps {

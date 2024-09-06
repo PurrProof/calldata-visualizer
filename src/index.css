@@ -4,55 +4,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.row {
-  display: flex;
-  background-color: #fff;
-}
-.row.data {
-  font-weight: bold;
-}
-.column {
-  flex: 0;
-  padding: 8px;
-  border: 1px solid #ddd;
-  text-align: center;
-}
-.column.word {
-  position: relative;
-  padding-right: 10px;
-}
-.column.offset {
-  white-space: nowrap;
-  flex: 0;
-  padding: 8px 4px;
-}
 
-.bar {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  border: 1px solid transparent;
-  border-width: 0 4px 0 0;
-  box-sizing: content-box;
-  right: 0;
-}
 
-.param {
-  margin-left: 20px;
-  padding: 5px;
-  border: 2px solid #ddd;
-  margin-bottom: 0;
-  float: left;
-  cursor: pointer;
-}
-
-.param-list {
-  overflow: hidden;
-  margin-left: 40px;
-}
-
-/* Static CSS classes for selections */
 .param.selected0,
 .bar.selected0 {
   border-color: #ff5733;

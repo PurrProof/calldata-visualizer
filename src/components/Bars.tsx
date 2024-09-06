@@ -1,4 +1,5 @@
-import IAbiWord from "./AbiWord";
+import { IAbiWord } from "../types/abi";
+import "./Bar.css";
 
 const Bars = ({
   word,

@@ -1,0 +1,22 @@
+.row {
+  display: flex;
+  background-color: #fff;
+}
+.row.data {
+  font-weight: bold;
+}
+.column {
+  flex: 0;
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+.column.word {
+  position: relative;
+  padding-right: 10px;
+}
+.column.offset {
+  white-space: nowrap;
+  flex: 0;
+  padding: 8px 4px;
+}
