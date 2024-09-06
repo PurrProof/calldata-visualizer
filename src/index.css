@@ -1,0 +1,183 @@
+body {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.row {
+  display: flex;
+  background-color: #fff;
+}
+.row.data {
+  font-weight: bold;
+}
+.column {
+  flex: 0;
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+.column.word {
+  position: relative;
+  padding-right: 10px;
+}
+.column.offset {
+  white-space: nowrap;
+  flex: 0;
+  padding: 8px 4px;
+}
+
+.bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  border: 1px solid transparent;
+  border-width: 0 4px 0 0;
+  box-sizing: content-box;
+  right: 0;
+}
+
+.param {
+  margin-left: 20px;
+  padding: 5px;
+  border: 2px solid #ddd;
+  margin-bottom: 0;
+  float: left;
+  cursor: pointer;
+}
+
+.param-list {
+  overflow: hidden;
+  margin-left: 40px;
+}
+
+/* Static CSS classes for selections */
+.param.selected0,
+.bar.selected0 {
+  border-color: #ff5733;
+}
+.param.selected1,
+.bar.selected1 {
+  border-color: #33ff57;
+}
+.param.selected2,
+.bar.selected2 {
+  border-color: #3357ff;
+}
+.param.selected3,
+.bar.selected3 {
+  border-color: #ff33a1;
+}
+.param.selected4,
+.bar.selected4 {
+  border-color: #ff8f33;
+}
+.param.selected5,
+.bar.selected5 {
+  border-color: #8f33ff;
+}
+.param.selected6,
+.bar.selected6 {
+  border-color: #33ff8f;
+}
+.param.selected7,
+.bar.selected7 {
+  border-color: #ff3380;
+}
+.param.selected8,
+.bar.selected8 {
+  border-color: #80ff33;
+}
+.param.selected9,
+.bar.selected9 {
+  border-color: #3380ff;
+}
+.param.selected10,
+.bar.selected10 {
+  border-color: #ff6633;
+}
+.param.selected11,
+.bar.selected11 {
+  border-color: #33ff66;
+}
+.param.selected12,
+.bar.selected12 {
+  border-color: #6633ff;
+}
+.param.selected13,
+.bar.selected13 {
+  border-color: #ff3366;
+}
+.param.selected14,
+.bar.selected14 {
+  border-color: #66ff33;
+}
+.param.selected15,
+.bar.selected15 {
+  border-color: #3366ff;
+}
+.param.selected16,
+.bar.selected16 {
+  border-color: #ff9933;
+}
+.param.selected17,
+.bar.selected17 {
+  border-color: #33ff99;
+}
+.param.selected18,
+.bar.selected18 {
+  border-color: #9933ff;
+}
+.param.selected19,
+.bar.selected19 {
+  border-color: #ff33cc;
+}
+.param.selected20,
+.bar.selected20 {
+  border-color: #ccff33;
+}
+.param.selected21,
+.bar.selected21 {
+  border-color: #33ccff;
+}
+.param.selected22,
+.bar.selected22 {
+  border-color: #ffcc33;
+}
+.param.selected23,
+.bar.selected23 {
+  border-color: #33ffcc;
+}
+.param.selected24,
+.bar.selected24 {
+  border-color: #cc33ff;
+}
+.param.selected25,
+.bar.selected25 {
+  border-color: #ff33ee;
+}
+.param.selected26,
+.bar.selected26 {
+  border-color: #eeff33;
+}
+.param.selected27,
+.bar.selected27 {
+  border-color: #33eeff;
+}
+.param.selected28,
+.bar.selected28 {
+  border-color: #ff33bb;
+}
+.param.selected29,
+.bar.selected29 {
+  border-color: #bbff33;
+}
+.param.selected30,
+.bar.selected30 {
+  border-color: #33bbff;
+}
+.param.selected31,
+.bar.selected31 {
+  border-color: #bb33ff;
+}
