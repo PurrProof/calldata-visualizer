@@ -24,7 +24,7 @@ const App = () => {
     setError,
   } = useDecoderState();
 
-  const { decodeData } = useAbiDecoder();
+  const { abiDecode } = useAbiDecoder();
   const { selectedIds, handleParamClick, resetSelection } = useParamSelection();
 
   const decodeAndSetData = useCallback(
@@ -32,14 +32,14 @@ const App = () => {
       resetSelection();
       setDecodedData(null);
       setError(null);
-      const result = decodeData(signatureToDecode, calldataToDecode); // Decode data
+      const result = abiDecode(signatureToDecode, calldataToDecode); // Decode data
       if (result) {
         setDecodedData(result);
       } else {
         setError('Decoding error');
       }
     },
-    [decodeData, setDecodedData, setError, resetSelection]
+    [abiDecode, setDecodedData, setError, resetSelection]
   );
 
   const handleExampleLoad = useCallback(

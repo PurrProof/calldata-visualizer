@@ -9,11 +9,11 @@ interface IDecodedData {
 }
 
 interface IUseAbiDecoder {
-  decodeData: (signature: string, calldata: string) => IDecodedData | null;
+  abiDecode: (signature: string, calldata: string) => IDecodedData | null;
 }
 
 const useAbiDecoder = (): IUseAbiDecoder => {
-  const decodeData = useCallback(
+  const abiDecode = useCallback(
     (signature: string, calldata: string): IDecodedData | null => {
       try {
         const iface = new ethers.Interface([signature]);
@@ -33,7 +33,7 @@ const useAbiDecoder = (): IUseAbiDecoder => {
     []
   );
 
-  return { decodeData };
+  return { abiDecode };
 };
 
 export default useAbiDecoder;
