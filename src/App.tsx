@@ -1,47 +1,61 @@
-import React, { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import InputFields from './components/InputFields';
 import Example from './components/ExampleLoader';
 import ParamTree from './components/ParamTree';
 import AbiWordList from './components/AbiWordList';
-import useDecoder from './hooks/useDecoder';
-import { assignIdsToParams } from "./helpers/params"
+import { assignIdsToParams } from './helpers/params';
 import { ethers } from 'ethers';
+
+import useDecoderState from './hooks/useDecoderState';
+import useAbiDecoder from './hooks/useAbiDecoder';
+import useParamSelection from './hooks/useParamSelection';
 
 const App = () => {
   const exampleRef = useRef<any>(null);
 
-  // Using the custom hook for state and decoding logic
   const {
     signature,
     setSignature,
     calldata,
     setCalldata,
     decodedData,
-    decodeData,
     setDecodedData,
-    selectedIds,
-    handleParamClick,
     error,
     setError,
-  } = useDecoder();
+  } = useDecoderState();
 
-  // Handle example load with TypeScript
+  const { decodeData } = useAbiDecoder();
+  const { selectedIds, handleParamClick, resetSelection } = useParamSelection(); // Use resetSelection
+
   const handleExampleLoad = useCallback(
     (newSignature: string, newCalldata: string) => {
       setSignature(newSignature);
       setCalldata(newCalldata);
-      setDecodedData(null); // Clear previous data
-      setError(null); // Clear any previous errors
-      decodeData(newSignature, newCalldata); // Explicitly call decodeData with new values
+      setDecodedData(null);
+      setError(null);
+      resetSelection();
+
+      const result = decodeData(newSignature, newCalldata); // Decode data
+      if (result) {
+        setDecodedData(result);
+      } else {
+        setError('Decoding error');
+      }
     },
-    [setSignature, setCalldata, setDecodedData, setError, decodeData]
+    [setSignature, setCalldata, setDecodedData, setError, decodeData, resetSelection]
   );
 
   const handleDecodeClick = useCallback(() => {
-    decodeData(signature, calldata); // Explicitly call decodeData with current values
-  }, [decodeData, signature, calldata]);
+    resetSelection(); // Clear parameter selection
+    const result = decodeData(signature, calldata);
+    if (result) {
+      setDecodedData(result);
+    } else {
+      setError('Decoding error');
+    }
+  }, [decodeData, signature, calldata, setDecodedData, setError, resetSelection]);
 
-  // Memoize functionParams and processedParams
+  // memoize functionParams and processedParams
   const functionParams = useMemo(() => {
     if (!signature) return [];
     try {
@@ -57,11 +71,15 @@ const App = () => {
 
   const processedParams = useMemo(() => assignIdsToParams([...functionParams]), [functionParams]);
 
-
   return (
     <div>
       <h1>Decoded ABI Parameters</h1>
-      <InputFields signature={signature} setSignature={setSignature} calldata={calldata} setCalldata={setCalldata} />
+      <InputFields
+        signature={signature}
+        setSignature={setSignature}
+        calldata={calldata}
+        setCalldata={setCalldata}
+      />
       <Example ref={exampleRef} onLoadExample={handleExampleLoad} />
       <button onClick={handleDecodeClick}>Decode Data</button>
 
