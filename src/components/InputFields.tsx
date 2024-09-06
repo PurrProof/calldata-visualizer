@@ -1,5 +1,3 @@
-import React from "react";
-
 interface IInputFieldsProps {
   signature: string;
   setSignature: (value: string) => void;

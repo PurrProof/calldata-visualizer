@@ -7,16 +7,14 @@ interface ProcessedParam {
   components?: ProcessedParam[]; // Recursive type for nested components
 }
 
-// Modify the function to handle ParamType from ethers.js
 export function assignIdsToParams(
-  params: ParamType[], // Now accepting ethers.js ParamType
+  params: ParamType[],
   idCounter: { current: number } = { current: 0 }
 ): ProcessedParam[] {
   return params.map(({ name, type, components }) => {
-    const paramId = idCounter.current++; // Increment the counter for each parameter
+    const paramId = idCounter.current++;
 
     if (components && components !== null) {
-      // Convert readonly components to a mutable array and recursively process
       return {
         id: paramId,
         type,

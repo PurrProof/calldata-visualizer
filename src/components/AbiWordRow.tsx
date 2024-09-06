@@ -1,7 +1,6 @@
-import React from "react";
 import Bars from "./Bars";
 import IAbiWord from "./AbiWord";
-import { ethers } from "ethers";
+import { hexlify } from "ethers";
 
 interface IAbiWordRowProps {
   word: IAbiWord;
@@ -15,7 +14,7 @@ const AbiWordRow = ({ word, offset, selectedIds }: IAbiWordRowProps) => (
     style={{ position: "relative" }}
   >
     <div className="column word">
-      {ethers.hexlify(word.data)}
+      {hexlify(word.data)}
       <Bars word={word} selectedIds={selectedIds} />
     </div>
     <div className="column offset">

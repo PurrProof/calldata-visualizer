@@ -1,4 +1,3 @@
-import React from "react";
 import IAbiWord from "./AbiWord";
 import AbiWordRow from "./AbiWordRow";
 
