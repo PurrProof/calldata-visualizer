@@ -31,7 +31,7 @@ importers:
         version: 18.3.0
       ethers:
         specifier: github:PurrProof/ethers.js#feat/accum-decode
-        version: https://codeload.github.com/PurrProof/ethers.js/tar.gz/908fba753dd3ef7bddfe0b4f840f7cf50c9294eb
+        version: https://codeload.github.com/PurrProof/ethers.js/tar.gz/dc01b1b37a9f3bd7065517fe2b5d857632f80ced
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -2332,8 +2332,8 @@ packages:
     engines: {node: '>=0.10.0'}
     hasBin: true
 
-  electron-to-chromium@1.5.16:
-    resolution: {integrity: sha512-2gQpi2WYobXmz2q23FrOBYTLcI1O/P4heW3eqX+ldmPVDQELRqhiebV380EhlGG12NtnX1qbK/FHpN0ba+7bLA==}
+  electron-to-chromium@1.5.17:
+    resolution: {integrity: sha512-Q6Q+04tjC2KJ8qsSOSgovvhWcv5t+SmpH6/YfAWmhpE5/r+zw6KQy1/yWVFFNyEBvy68twTTXr2d5eLfCq7QIw==}
 
   emittery@0.10.2:
     resolution: {integrity: sha512-aITqOwnLanpHLNXZJENbOgjUBeHocD+xsSJmNrjovKBW5HbSpW3d1pEls7GFQPUWXiwG9+0P4GtHfEqC/4M0Iw==}
@@ -2597,8 +2597,8 @@ packages:
     resolution: {integrity: sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==}
     engines: {node: '>= 0.6'}
 
-  ethers@https://codeload.github.com/PurrProof/ethers.js/tar.gz/908fba753dd3ef7bddfe0b4f840f7cf50c9294eb:
-    resolution: {tarball: https://codeload.github.com/PurrProof/ethers.js/tar.gz/908fba753dd3ef7bddfe0b4f840f7cf50c9294eb}
+  ethers@https://codeload.github.com/PurrProof/ethers.js/tar.gz/dc01b1b37a9f3bd7065517fe2b5d857632f80ced:
+    resolution: {tarball: https://codeload.github.com/PurrProof/ethers.js/tar.gz/dc01b1b37a9f3bd7065517fe2b5d857632f80ced}
     version: 6.13.2
     engines: {node: '>=14.0.0'}
 
@@ -7766,7 +7766,7 @@ snapshots:
   browserslist@4.23.3:
     dependencies:
       caniuse-lite: 1.0.30001658
-      electron-to-chromium: 1.5.16
+      electron-to-chromium: 1.5.17
       node-releases: 2.0.18
       update-browserslist-db: 1.1.0(browserslist@4.23.3)
 
@@ -8299,7 +8299,7 @@ snapshots:
     dependencies:
       jake: 10.9.2
 
-  electron-to-chromium@1.5.16: {}
+  electron-to-chromium@1.5.17: {}
 
   emittery@0.10.2: {}
 
@@ -8704,7 +8704,7 @@ snapshots:
 
   etag@1.8.1: {}
 
-  ethers@https://codeload.github.com/PurrProof/ethers.js/tar.gz/908fba753dd3ef7bddfe0b4f840f7cf50c9294eb:
+  ethers@https://codeload.github.com/PurrProof/ethers.js/tar.gz/dc01b1b37a9f3bd7065517fe2b5d857632f80ced:
     dependencies:
       '@adraffy/ens-normalize': 1.10.1
       '@noble/curves': 1.2.0
