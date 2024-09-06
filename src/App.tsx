@@ -2,11 +2,13 @@ import { useCallback, useMemo, useRef } from 'react';
 import InputFields from './components/InputFields';
 import Example from './components/ExampleLoader';
 import ParamTree from './components/ParamTree';
-import AbiWordList from './components/AbiWordList';
+import AbiWordRow from './components/AbiWordRow';
 import getParamsWithIds from './helpers/params';
 import useDecoderState from './hooks/useDecoderState';
 import useAbiDecoder from './hooks/useAbiDecoder';
 import useParamSelection from './hooks/useParamSelection';
+
+import { IAbiWord } from './types/abi';
 
 const App = () => {
   const exampleRef = useRef<any>(null);
@@ -67,15 +69,25 @@ const App = () => {
       <Example ref={exampleRef} onLoadExample={handleExampleLoad} />
       <button onClick={handleDecodeClick}>Decode Data</button>
 
-      {error && <div style={{ color: 'red', marginTop: '10px' }}>{error}</div>}
+      {error && <div className={error}>{error}</div>}
 
-      {decodedData && (
-        <>
-          <ParamTree params={processedParams} onClick={handleParamClick} selectedIds={selectedIds} />
-          <AbiWordList words={decodedData.accum.words} selectedIds={selectedIds} />
-        </>
-      )}
-    </div>
+      {
+        decodedData && (
+          <>
+            <ParamTree params={processedParams} onClick={handleParamClick} selectedIds={selectedIds} />
+            {Array.from(decodedData.accum.words.entries() as [number, IAbiWord][]).map(
+              ([offset, word]: [number, IAbiWord]) =>
+                <AbiWordRow
+                  key={offset}
+                  word={word}
+                  offset={offset}
+                  selectedIds={selectedIds}
+                />
+            )}
+          </>
+        )
+      }
+    </div >
   );
 };
 

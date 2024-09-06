@@ -5,6 +5,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.error{ color: "red"; margin-top: 10px; }
 
 .param.selected0,
 .bar.selected0 {
