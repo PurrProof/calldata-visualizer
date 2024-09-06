@@ -58,7 +58,7 @@ const App = () => {
   const processedParams = useMemo(() => getParamsWithIds(signature), [signature]);
 
   return (
-    <div>
+    <>
       <h1>Decoded ABI Parameters</h1>
       <InputFields
         signature={signature}
@@ -73,7 +73,7 @@ const App = () => {
 
       {
         decodedData && (
-          <>
+          <div className={"decoded"}>
             <ParamTree params={processedParams} onClick={handleParamClick} selectedIds={selectedIds} />
             {Array.from(decodedData.accum.words.entries() as [number, IAbiWord][]).map(
               ([offset, word]: [number, IAbiWord]) =>
@@ -84,10 +84,10 @@ const App = () => {
                   selectedIds={selectedIds}
                 />
             )}
-          </>
+          </div>
         )
       }
-    </div >
+    </>
   );
 };
 
