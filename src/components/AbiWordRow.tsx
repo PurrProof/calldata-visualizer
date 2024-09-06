@@ -9,6 +9,10 @@ interface IAbiWordRowProps {
   selectedIds: number[];
 }
 
+const formatOffset = (offset: number): string => {
+  return "0x" + offset.toString(16).toUpperCase().padStart(4, "0");
+};
+
 const AbiWordRow = ({ word, offset, selectedIds }: IAbiWordRowProps) => (
   <div
     className={`row ${word.isIndex ? "index" : "data"}`}
@@ -19,8 +23,7 @@ const AbiWordRow = ({ word, offset, selectedIds }: IAbiWordRowProps) => (
       <Bars word={word} selectedIds={selectedIds} />
     </div>
     <div className="column offset">
-      {"0x" + offset.toString(16).toUpperCase().padStart(4, "0")} —{" "}
-      {"0x" + (offset + 31).toString(16).toUpperCase().padStart(4, "0")}
+      {formatOffset(offset)} — {formatOffset(offset + 31)}
     </div>
   </div>
 );
