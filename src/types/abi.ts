@@ -3,3 +3,9 @@ export interface IAbiWord {
   coders: number[];
   isIndex?: boolean;
 }
+export interface IExample {
+  id: number;
+  name: string;
+  signature: string;
+  calldata: string;
+}

@@ -1,5 +1,14 @@
 import { create } from "zustand";
 import { ethers } from "ethers";
+import getParamsWithIds from "../helpers/params";
+import type { IExample } from "../types/abi";
+
+interface IDecodedData {
+  decoded: any;
+  accum: {
+    words: Map<number, any>;
+  };
+}
 
 // Zustand store interface
 interface StoreState {
@@ -17,7 +26,10 @@ interface StoreState {
     event?: React.MouseEvent<HTMLDivElement>
   ) => void; // Accept event to stop propagation
   resetSelection: () => void;
-  abiDecode: (signature: string, calldata: string) => void;
+  abiDecode: (signature: string, calldata: string) => IDecodedData | null;
+  processSignature: (signature: string) => any[];
+  handleDecodeClick: () => void;
+  loadExample: (example: IExample) => void;
 }
 
 const useStore = create<StoreState>((set, get) => ({
@@ -32,8 +44,21 @@ const useStore = create<StoreState>((set, get) => ({
   setDecodedData: (decodedData) => set({ decodedData }),
   setError: (error) => set({ error }),
 
+  handleDecodeClick: () => {
+    const { signature, calldata, abiDecode } = get();
+    try {
+      const result = abiDecode(signature, calldata);
+      if (result) {
+        set({ decodedData: result, error: null });
+      } else {
+        set({ error: "Decoding error", decodedData: null });
+      }
+    } catch (error: any) {
+      set({ error: `Decoding error: ${error.message}`, decodedData: null });
+    }
+  },
+
   handleParamClick: (id, event) => {
-    // Stop event propagation
     if (event) {
       event.stopPropagation();
     }
@@ -48,7 +73,20 @@ const useStore = create<StoreState>((set, get) => ({
 
   resetSelection: () => set({ selectedIds: [] }),
 
-  abiDecode: (signature, calldata) => {
+  loadExample: (example: IExample): void => {
+    const { resetSelection, setSignature, setCalldata, abiDecode } = get();
+    resetSelection();
+    setSignature(example.signature);
+    setCalldata(example.calldata);
+    abiDecode(example.signature, example.calldata);
+  },
+
+  processSignature: (signature: string) => {
+    if (!signature) return [];
+    return getParamsWithIds(signature);
+  },
+
+  abiDecode: (signature, calldata): IDecodedData | null => {
     try {
       const iface = new ethers.Interface([signature]);
       const func = iface.getFunction(signature);
@@ -58,9 +96,11 @@ const useStore = create<StoreState>((set, get) => ({
       const decoded = iface.decodeFunctionData(func, calldata);
       const accum = ethers.AbiCoder.defaultAbiCoder().getAccumulatedAbiWords();
       set({ decodedData: { decoded, accum }, error: null });
+      return { decoded, accum };
     } catch (error: any) {
       console.error("Decoding error:", error);
       set({ decodedData: null, error: `Decoding error: ${error.message}` });
+      return null;
     }
   },
 }));

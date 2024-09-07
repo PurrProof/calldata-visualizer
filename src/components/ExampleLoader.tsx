@@ -1,14 +1,7 @@
-import { forwardRef, useImperativeHandle } from "react";
 import useStore from '../store/store';
+import type { IExample } from '../types/abi';
 
-interface IExample {
-  id: number;
-  name: string;
-  signature: string;
-  calldata: string;
-}
-
-const examples = [
+const examples: IExample[] = [
   {
     id: 1,
     name: "Example 1",
@@ -45,28 +38,18 @@ const examples = [
   }
 ];
 
-const ExampleLoader = forwardRef((_, ref) => {
-  const { setSignature, setCalldata, abiDecode } = useStore();
-
-  const loadExample = (example: IExample) => {
-    setSignature(example.signature);
-    setCalldata(example.calldata);
-    abiDecode(example.signature, example.calldata);
-  };
-
-  useImperativeHandle(ref, () => ({
-    loadExample,
-  }));
+const ExampleLoader = () => {
+  const { loadExample } = useStore(); // Use loadExample directly from the store
 
   return (
     <div>
-      {examples.map((example) => (
+      {examples.map((example: IExample) => (
         <button key={example.id} onClick={() => loadExample(example)}>
           Load {example.name}
         </button>
       ))}
     </div>
   );
-});
+};
 
 export default ExampleLoader;

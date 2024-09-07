@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import ParamGroup from "./ParamGroup";
 import Bar from "./Bar";
 import getColor from "../helpers/colors";
