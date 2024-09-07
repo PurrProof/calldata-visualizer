@@ -27,11 +27,11 @@ body {
 
 .column {
   padding: 8px;
-  border: 1px solid #aaa;
+  border: 1px solid #ddd;
 }
 
 .column.word {
-  padding-left: 10px;
+  padding-left: 15px;
 }
 
 .column.offset {
@@ -46,7 +46,7 @@ body {
 .param {
   text-align: right;
   padding: 10px;
-  border: 1px solid #aaa;
+  border: 1px solid #ddd;
   cursor: pointer;
   margin-bottom: 5px;
   position: relative;
