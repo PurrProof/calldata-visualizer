@@ -7,7 +7,7 @@ import useStore from './store/store';
 import { IAbiWord } from './types';
 
 const App = () => {
-  const { decodedData, error, decodeCalldata, clearAll, selectAllParams, deselectAllParams, loadFromUrl } = useStore();
+  const { decodedData, error, decodeCalldata, clearAll, selectAllParams, resetSelection, loadFromUrl } = useStore();
 
   // useEffect run twice in dev mode because of React.StrictMode
   const hasLoaded = useRef(false); // ref to track if effect has run
@@ -20,12 +20,12 @@ const App = () => {
 
   return (
     <>
-      <h1>Decoded ABI Parameters Vizualization</h1>
+      <h1>ABI CallData Visualizer</h1>
       <InputFields />
       <button onClick={decodeCalldata}>Decode</button >
       <button onClick={clearAll}>Clear</button >
       <button onClick={selectAllParams}>Select All</button >
-      <button onClick={deselectAllParams}>Deselect All</button >
+      <button onClick={resetSelection}>Deselect All</button >
       <Examples />
 
       {error && <div className="error">{error}</div>}

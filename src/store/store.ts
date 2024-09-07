@@ -23,7 +23,6 @@ interface StoreState {
   clearAll: () => void;
   clearDecoded: () => void;
   selectAllParams: () => void;
-  deselectAllParams: () => void;
 
   resetSelection: () => void;
   loadExample: (example: IExample) => void;
@@ -104,23 +103,26 @@ const useStore = create<StoreState>((set, get) => ({
     set({ selectedIds: collectAllParamIds(decodedData.inputsWithIds) });
   },
 
-  deselectAllParams: () => {
-    set({ selectedIds: [] });
-  },
-
   loadExample: (example: IExample) => {
-    const { setSignature, setCalldata, decodeCalldata } = get();
-    setSignature(example.signature);
-    setCalldata(example.calldata);
-    decodeCalldata();
+    const { setSignature, setCalldata, decodeCalldata, clearAll } = get();
+
+    clearAll();
+
+    // schedule the loading and decoding of the new example in the next tick
+    setTimeout(() => {
+      setSignature(example.signature);
+      setCalldata(example.calldata);
+      decodeCalldata();
+    }, 0);
   },
 
   loadFromUrl: () => {
-    const { decodeCalldata, setSignature, setCalldata } = get();
+    const { decodeCalldata, setSignature, setCalldata, clearAll } = get();
     const { signature, calldata } = getUrlParams();
     if (!signature || !calldata) {
       return;
     }
+    clearAll();
     setSignature(decodeURIComponent(signature));
     setCalldata(decodeURIComponent(calldata));
     decodeCalldata();

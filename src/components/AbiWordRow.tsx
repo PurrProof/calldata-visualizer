@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import Bar from "./Bar";
 import { IAbiWord } from "../types";
 import getColor from "../helpers/colors";
@@ -15,8 +16,7 @@ const formatOffset = (offset: number): string => {
 };
 
 const AbiWordRow = ({ word, offset }: IAbiWordRowProps) => {
-  const selectedIds = useStore((state) => state.selectedIds);
-  const hoveredParamId = useStore((state) => state.hoveredParamId); // Get hover state
+  const { selectedIds, hoveredParamId } = useStore();
   const selectedCoders = selectedIds.filter((id) => word.coders.includes(id)).sort();
 
   return (
@@ -33,7 +33,7 @@ const AbiWordRow = ({ word, offset }: IAbiWordRowProps) => {
         const startId = `param${id}`;
         const endId = `word${formatOffset(offset)}`;
         return (
-          <>
+          <Fragment key={id}>  {/* Use React.Fragment with a key */}
             <Bar key={id} depth={index} id={id} align="left" />
             <Xarrow
               key={`${startId}-${endId}`}
@@ -45,10 +45,10 @@ const AbiWordRow = ({ word, offset }: IAbiWordRowProps) => {
               //dashness={hoveredParamId === id ? false : true}
               strokeWidth={hoveredParamId === id ? 3 : 1}
             />
-          </>
+          </Fragment>
         );
       })}
-    </div>
+    </div >
   );
 };
 
