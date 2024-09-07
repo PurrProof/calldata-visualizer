@@ -1,6 +1,6 @@
 import { memo } from "react";
 import ParamGroup from "./ParamGroup";
-import Bar from "./Bar";
+//import Bar from "./Bar";
 import getColor from "../helpers/colors";
 import useStore from "../store/store";
 
@@ -33,7 +33,8 @@ const Param = memo(({ param }: { param: IParam }) => {
     >
       <strong>{param.name}</strong> {param.type}
 
-      {isSelected && <Bar key={param.id} depth={0} id={param.id} align="right" />}
+      {/* don't render bar, because we set bg for now 
+      isSelected && <Bar key={param.id} depth={0} id={param.id} align="right" />*/}
 
       {param.components && <ParamGroup params={param.components} />}
     </div>

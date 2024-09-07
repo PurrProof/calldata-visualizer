@@ -10,6 +10,7 @@ form.textarea {
 .abi-decoded-container {
   display: flex;
   width: 100%;
+  margin-top: 10px;
 }
 
 .abi-decoded-data {
