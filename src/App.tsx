@@ -1,5 +1,5 @@
 import InputFields from './components/InputFields';
-import Example from './components/ExampleLoader';
+import Examples from './components/Examples';
 import ParamGroup from './components/ParamGroup';
 import AbiWordRow from './components/AbiWordRow';
 import useStore from './store/store';
@@ -10,10 +10,10 @@ const App = () => {
 
   return (
     <>
-      <h1>Decoded ABI Parameters</h1>
+      <h1>Decoded ABI Parameters Vizualization</h1>
       <InputFields />
-      <Example />
       <button onClick={handleDecodeClick}>Decode Data</button>
+      <Examples />
 
       {error && <div className={error}>{error}</div>}
 

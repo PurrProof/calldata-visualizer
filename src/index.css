@@ -64,6 +64,25 @@ body {
   width: 5px;
 }
 
+.examples {
+  margin-left: 30px;
+  display: inline-block;
+}
+
+.examples button {
+  margin-right: 10px;
+}
+
+form.calldata {
+  width: 50%;
+}
+
+form.calldata label {
+  display: block;
+  margin: 10px 0 0 0;
+}
+
+
 .error {
   color: #f5222d;
   margin-top: 10px;

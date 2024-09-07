@@ -5,7 +5,7 @@ const InputFields = () => {
   const { signature, setSignature, calldata, setCalldata } = useStore();
 
   return (
-    <div>
+    <form className="calldata">
       <div>
         <label>Function Signature:</label>
         <input
@@ -26,7 +26,7 @@ const InputFields = () => {
           style={{ width: "100%" }}
         />
       </div>
-    </div>
+    </form>
   );
 };
 

@@ -38,11 +38,11 @@ const examples: IExample[] = [
   }
 ];
 
-const ExampleLoader = () => {
-  const { loadExample } = useStore(); // Use loadExample directly from the store
+const Examples = () => {
+  const { loadExample } = useStore();
 
   return (
-    <div>
+    <div className="examples">
       {examples.map((example: IExample) => (
         <button key={example.id} onClick={() => loadExample(example)}>
           Load {example.name}
@@ -52,4 +52,4 @@ const ExampleLoader = () => {
   );
 };
 
-export default ExampleLoader;
+export default Examples;
