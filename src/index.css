@@ -18,6 +18,7 @@ body {
   display: flex;
   margin-left: 200px;
   margin-bottom: 5px;
+  position: relative;
 }
 
 .row.data {
@@ -30,7 +31,6 @@ body {
 }
 
 .column.word {
-  position: relative;
   padding-left: 10px;
 }
 
@@ -49,17 +49,14 @@ body {
   border: 1px solid #aaa;
   cursor: pointer;
   margin-bottom: 5px;
+  position: relative;
 }
 
 .bar {
+  top: 0;
   position: absolute;
   height: 100%;
   width: 5px;
-  top: -1px;
-  left: 0;
-  margin-left: -1px;
-  border-width: 1px 0;
-  border-style: solid;
 }
 
 .error {

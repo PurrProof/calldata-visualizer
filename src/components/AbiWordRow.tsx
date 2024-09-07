@@ -1,4 +1,4 @@
-import Bars from "./Bars";
+import Bar from "./Bar";
 import { IAbiWord } from "../types/abi";
 import getColor from "../helpers/colors";
 import { hexlify } from "ethers";
@@ -14,36 +14,42 @@ const formatOffset = (offset: number): string => {
   return "0x" + offset.toString(16).toUpperCase().padStart(4, "0");
 };
 
-const AbiWordRow = ({ word, offset, selectedIds }: IAbiWordRowProps) => (
-  <div
-    id={`word${formatOffset(offset)}`}
-    className={`row ${word.isIndex ? "index" : "data"}`}
-  >
-    <div className="column word">
-      {hexlify(word.data)}
-      <Bars word={word} selectedIds={selectedIds} />
-    </div>
-    <div className="column offset">
-      {formatOffset(offset)} — {formatOffset(offset + 31)}
-    </div>
+const AbiWordRow = ({ word, offset, selectedIds }: IAbiWordRowProps) => {
+  const selectedCoders = selectedIds.filter((id) => word.coders.includes(id)).sort();
 
-    {word.coders.map((coderId) => {
-      const startId = `param${coderId}`;
-      const endId = `word${formatOffset(offset)}`;
-      return (
-        <Xarrow
-          key={`${startId}-${endId}`}
-          start={startId}
-          end={endId}
-          startAnchor="right"
-          endAnchor="left"
-          color={`${getColor(coderId)}`}
-          strokeWidth={1}
-        />
-      );
-    })}
+  return (
+    <div
+      id={`word${formatOffset(offset)}`}
+      className={`row ${word.isIndex ? "index" : "data"}`}
+    >
+      <div className="column word">
+        {hexlify(word.data)}
+      </div>
 
-  </div >
-);
+      <div className="column offset">
+        {formatOffset(offset)} — {formatOffset(offset + 31)}
+      </div>
+
+      {selectedCoders.map((id, index) => {
+        const startId = `param${id}`;
+        const endId = `word${formatOffset(offset)}`;
+        return (
+          <>
+            <Bar key={id} depth={index} id={id} align="left" />
+            <Xarrow
+              key={`${startId}-${endId}`}
+              start={startId}
+              end={endId}
+              startAnchor="right"
+              endAnchor="left"
+              color={`${getColor(id)}`}
+              strokeWidth={1}
+            />
+          </>
+        );
+      })}
+
+    </div >);
+}
 
 export default AbiWordRow;
