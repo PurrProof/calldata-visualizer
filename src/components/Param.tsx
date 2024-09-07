@@ -27,7 +27,7 @@ const Param = memo(({ param }: { param: IParam }) => {
           }
           : {}
       }
-      onClick={(event) => handleParamClick(param.id, event)} // Pass event to store
+      onClick={(event) => { event.stopPropagation(); handleParamClick(param.id) }}
       onMouseOver={(event) => { event.stopPropagation(); setHoveredParam(param.id) }}
       onMouseLeave={() => setHoveredParam(null)}
     >

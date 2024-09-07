@@ -21,10 +21,7 @@ interface StoreState {
   setCalldata: (calldata: string) => void;
   setDecodedData: (decodedData: IDecodedData | null) => void;
   setError: (error: string | null) => void;
-  handleParamClick: (
-    id: number,
-    event?: React.MouseEvent<HTMLDivElement>
-  ) => void;
+  handleParamClick: (id: number) => void;
   resetSelection: () => void;
   abiDecode: (signature: string, calldata: string) => IDecodedData | null;
   processSignature: (signature: string) => any[];
@@ -74,10 +71,8 @@ const useStore = create<StoreState>((set, get) => ({
     set({ decodedData: result || null });
   },
 
-  // handle parameter click, optionally prevent event propagation
-  handleParamClick: (id, event) => {
-    event?.stopPropagation();
-
+  // handle parameter click
+  handleParamClick: (id) => {
     const { selectedIds } = get();
     const newSelectedIds = selectedIds.includes(id)
       ? selectedIds.filter((selectedId) => selectedId !== id)

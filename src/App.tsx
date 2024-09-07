@@ -12,25 +12,27 @@ const App = () => {
     <>
       <h1>Decoded ABI Parameters Vizualization</h1>
       <InputFields />
-      <button onClick={handleDecodeClick}>Decode Data</button>
+      <button onClick={(event) => { event.stopPropagation(); handleDecodeClick() }}>Decode Data</button>
       <Examples />
 
-      {error && <div className={error}>{error}</div>}
+      {error && <div className="error">{error}</div>}
 
-      {decodedData && (
-        <div className="abi-decoded-container">
-          <div className="abi-decoded-params">
-            <ParamGroup params={processSignature(signature)} />
+      {
+        decodedData && (
+          <div className="abi-decoded-container">
+            <div className="abi-decoded-params">
+              <ParamGroup params={processSignature(signature)} />
+            </div>
+            <div className="abi-decoded-data">
+              {Array.from(decodedData.accum.words.entries()).map(
+                ([offset, word]: [number, IAbiWord]) => (
+                  <AbiWordRow key={offset} word={word} offset={offset} />
+                )
+              )}
+            </div>
           </div>
-          <div className="abi-decoded-data">
-            {Array.from(decodedData.accum.words.entries()).map(
-              ([offset, word]: [number, IAbiWord]) => (
-                <AbiWordRow key={offset} word={word} offset={offset} />
-              )
-            )}
-          </div>
-        </div>
-      )}
+        )
+      }
     </>
   );
 };
