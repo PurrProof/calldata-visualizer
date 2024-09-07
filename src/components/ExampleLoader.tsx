@@ -1,14 +1,11 @@
 import { forwardRef, useImperativeHandle } from "react";
+import useStore from '../store/store';
 
 interface IExample {
   id: number;
   name: string;
   signature: string;
   calldata: string;
-}
-
-interface IExampleLoaderProps {
-  onLoadExample: (signature: string, calldata: string) => void;
 }
 
 const examples = [
@@ -48,15 +45,17 @@ const examples = [
   }
 ];
 
-const ExampleLoader = forwardRef((props: IExampleLoaderProps, ref) => {
-  const { onLoadExample } = props;
+const ExampleLoader = forwardRef((_, ref) => {
+  const { setSignature, setCalldata, abiDecode } = useStore();
 
   const loadExample = (example: IExample) => {
-    onLoadExample(example.signature, example.calldata);
+    setSignature(example.signature);
+    setCalldata(example.calldata);
+    abiDecode(example.signature, example.calldata);
   };
 
   useImperativeHandle(ref, () => ({
-    loadExample: (example: IExample) => loadExample(example),
+    loadExample,
   }));
 
   return (

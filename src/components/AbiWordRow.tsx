@@ -3,25 +3,23 @@ import { IAbiWord } from "../types/abi";
 import getColor from "../helpers/colors";
 import { hexlify } from "ethers";
 import Xarrow from "react-xarrows";
+import useStore from '../store/store';
 
 interface IAbiWordRowProps {
   word: IAbiWord;
   offset: number;
-  selectedIds: number[];
 }
 
 const formatOffset = (offset: number): string => {
   return "0x" + offset.toString(16).toUpperCase().padStart(4, "0");
 };
 
-const AbiWordRow = ({ word, offset, selectedIds }: IAbiWordRowProps) => {
+const AbiWordRow = ({ word, offset }: IAbiWordRowProps) => {
+  const selectedIds = useStore((state) => state.selectedIds);
   const selectedCoders = selectedIds.filter((id) => word.coders.includes(id)).sort();
 
   return (
-    <div
-      id={`word${formatOffset(offset)}`}
-      className={`row ${word.isIndex ? "index" : "data"}`}
-    >
+    <div id={`word${formatOffset(offset)}`} className={`row ${word.isIndex ? "index" : "data"}`}>
       <div className="column word">
         {hexlify(word.data)}
       </div>
@@ -48,8 +46,8 @@ const AbiWordRow = ({ word, offset, selectedIds }: IAbiWordRowProps) => {
           </>
         );
       })}
-
-    </div >);
-}
+    </div>
+  );
+};
 
 export default AbiWordRow;

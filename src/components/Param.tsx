@@ -1,7 +1,8 @@
-import React, { memo, useCallback } from "react";
+import React, { memo } from "react";
 import ParamGroup from "./ParamGroup";
-import Bar from "./Bar"
+import Bar from "./Bar";
 import getColor from "../helpers/colors";
+import useStore from "../store/store";
 
 export interface IParam {
   id: number;
@@ -10,50 +11,33 @@ export interface IParam {
   components?: IParam[];
 }
 
-export interface IParamProps {
-  param: IParam;
-  onClick: (id: number) => void;
-  selectedIds: number[];
-}
-
-const Param = memo(({ param, onClick, selectedIds }: IParamProps) => {
-  const handleClick = useCallback(
-    (event: React.MouseEvent<HTMLDivElement>) => {
-      event.stopPropagation();
-      onClick(param.id);
-    },
-    [onClick, param.id]
-  );
-
+const Param = memo(({ param }: { param: IParam }) => {
+  const { selectedIds, handleParamClick } = useStore();
   const isSelected = selectedIds.includes(param.id);
 
   return (
     <div
       id={`param${param.id}`}
       className="param"
-      style={isSelected ? {
-        backgroundColor: getColor(param.id),
-        borderColor: getColor(param.id)
-      } : {}}
-      onClick={handleClick}
+      style={
+        isSelected
+          ? {
+            backgroundColor: getColor(param.id),
+            borderColor: getColor(param.id),
+          }
+          : {}
+      }
+      onClick={(event) => handleParamClick(param.id, event)} // Pass event to store
     >
       <strong>
         #{param.id} {param.name || "Unnamed"}:
       </strong>{" "}
       {param.type}
 
-      {isSelected ? <Bar key={param.id} depth={0} id={param.id} align="right" /> : null}
+      {isSelected && <Bar key={param.id} depth={0} id={param.id} align="right" />}
 
-      {
-        param.components && (
-          <ParamGroup
-            params={param.components}
-            onClick={onClick}
-            selectedIds={selectedIds}
-          />
-        )
-      }
-    </div >
+      {param.components && <ParamGroup params={param.components} />}
+    </div>
   );
 });
 

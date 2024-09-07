@@ -4,28 +4,26 @@ import Example from './components/ExampleLoader';
 import ParamGroup from './components/ParamGroup';
 import AbiWordRow from './components/AbiWordRow';
 import getParamsWithIds from './helpers/params';
-import useDecoderState from './hooks/useDecoderState';
 import useAbiDecoder from './hooks/useAbiDecoder';
-import useParamSelection from './hooks/useParamSelection';
+import useStore from './store/store';
 
 import { IAbiWord } from './types/abi';
 
 const App = () => {
   const exampleRef = useRef<any>(null);
 
+  // Zustand store hooks
   const {
     signature,
-    setSignature,
     calldata,
-    setCalldata,
     decodedData,
     setDecodedData,
     error,
     setError,
-  } = useDecoderState();
+    resetSelection,
+  } = useStore();
 
   const { abiDecode } = useAbiDecoder();
-  const { selectedIds, handleParamClick, resetSelection } = useParamSelection();
 
   const decodeAndSetData = useCallback(
     (signatureToDecode: string, calldataToDecode: string) => {
@@ -42,15 +40,6 @@ const App = () => {
     [abiDecode, setDecodedData, setError, resetSelection]
   );
 
-  const handleExampleLoad = useCallback(
-    (newSignature: string, newCalldata: string) => {
-      setSignature(newSignature);
-      setCalldata(newCalldata);
-      decodeAndSetData(newSignature, newCalldata);
-    },
-    [setSignature, setCalldata, decodeAndSetData]
-  );
-
   const handleDecodeClick = useCallback(() => {
     decodeAndSetData(signature, calldata);
   }, [decodeAndSetData, signature, calldata]);
@@ -60,37 +49,29 @@ const App = () => {
   return (
     <>
       <h1>Decoded ABI Parameters</h1>
-      <InputFields
-        signature={signature}
-        setSignature={setSignature}
-        calldata={calldata}
-        setCalldata={setCalldata}
-      />
-      <Example ref={exampleRef} onLoadExample={handleExampleLoad} />
+      <InputFields />
+      <Example ref={exampleRef} />
       <button onClick={handleDecodeClick}>Decode Data</button>
 
       {error && <div className={error}>{error}</div>}
 
-      {
-        decodedData && (
-          <div className="abi-decoded-container">
-            <div className="abi-decoded-params">
-              <ParamGroup params={processedParams} onClick={handleParamClick} selectedIds={selectedIds} />
-            </div>
-            <div className="abi-decoded-data">
-              {Array.from(decodedData.accum.words.entries() as [number, IAbiWord][]).map(
-                ([offset, word]: [number, IAbiWord]) =>
-                  <AbiWordRow
-                    key={offset}
-                    word={word}
-                    offset={offset}
-                    selectedIds={selectedIds}
-                  />
-              )}
-            </div>
-          </div >
-        )
-      }
+      {decodedData && (
+        <div className="abi-decoded-container">
+          <div className="abi-decoded-params">
+            <ParamGroup params={processedParams} />
+          </div>
+          <div className="abi-decoded-data">
+            {Array.from(decodedData.accum.words.entries() as [number, IAbiWord][]).map(
+              ([offset, word]: [number, IAbiWord]) =>
+                <AbiWordRow
+                  key={offset}
+                  word={word}
+                  offset={offset}
+                />
+            )}
+          </div>
+        </div>
+      )}
     </>
   );
 };
