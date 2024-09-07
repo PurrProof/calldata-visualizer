@@ -20,7 +20,7 @@ const AbiWordRow = ({ word, offset }: IAbiWordRowProps) => {
   const selectedCoders = selectedIds.filter((id) => word.coders.includes(id)).sort();
 
   return (
-    <div id={`word${formatOffset(offset)}`} className={`row ${word.isIndex ? "index" : "data"}`}>
+    <div id={`word${formatOffset(offset)}`} key={`word${formatOffset(offset)}`} className={`row ${word.isIndex ? "index" : "data"}`}>
       <div className="column word">
         {hexlify(word.data)}
       </div>

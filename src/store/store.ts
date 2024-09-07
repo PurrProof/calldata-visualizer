@@ -1,6 +1,5 @@
 import { create } from "zustand";
-import getParamsWithIds from "../helpers/params";
-import type { IExample, IDecodedCalldata } from "../types";
+import type { IExample, IDecodedCalldata, IProcessedParam } from "../types";
 import abiDecodeCalldata from "../helpers/abi";
 
 // zustand store interface
@@ -22,9 +21,10 @@ interface StoreState {
   decodeCalldata: () => void;
   clearAll: () => void;
   clearDecoded: () => void;
+  selectAllParams: () => void;
+  deselectAllParams: () => void;
 
   resetSelection: () => void;
-  processSignature: (signature: string) => any[];
   loadExample: (example: IExample) => void;
 }
 
@@ -50,7 +50,6 @@ const useStore = create<StoreState>((set, get) => ({
     const newSelectedIds = selectedIds.includes(id)
       ? selectedIds.filter((selectedId) => selectedId !== id)
       : [...selectedIds, id];
-
     set({ selectedIds: newSelectedIds });
   },
 
@@ -93,10 +92,24 @@ const useStore = create<StoreState>((set, get) => ({
     decodeCalldata(); // decode after loading example
   },
 
-  // process the signature and extract parameter ids
-  processSignature: (signature: string) => {
-    if (!signature) return [];
-    return getParamsWithIds(signature);
+  selectAllParams: () => {
+    const { decodedData } = get();
+
+    // if there's no decoded data, return
+    if (!decodedData?.inputsWithIds) return;
+
+    // recursive function to collect all param ids
+    const collectAllParamIds = (params: IProcessedParam[]): number[] =>
+      params.flatMap((param) => [
+        param.id,
+        ...(param.components ? collectAllParamIds(param.components) : []),
+      ]);
+
+    set({ selectedIds: collectAllParamIds(decodedData.inputsWithIds) });
+  },
+
+  deselectAllParams: () => {
+    set({ selectedIds: [] });
   },
 }));
 

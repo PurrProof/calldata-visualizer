@@ -6,15 +6,17 @@ import useStore from './store/store';
 import { IAbiWord } from './types';
 
 const App = () => {
-  const { signature, decodedData, error, processSignature, decodeCalldata, clearAll } = useStore();
+  const { decodedData, error, decodeCalldata, clearAll, selectAllParams, deselectAllParams } = useStore();
 
   return (
     <>
       <h1>Decoded ABI Parameters Vizualization</h1>
       <InputFields />
       <button onClick={decodeCalldata}>Decode</button >
-      <Examples />
       <button onClick={clearAll}>Clear</button >
+      <button onClick={selectAllParams}>Select All</button >
+      <button onClick={deselectAllParams}>Deselect All</button >
+      <Examples />
 
       {error && <div className="error">{error}</div>}
 
@@ -22,7 +24,7 @@ const App = () => {
         decodedData && (
           <div className="abi-decoded-container">
             <div className="abi-decoded-params">
-              <ParamGroup params={processSignature(signature)} />
+              <ParamGroup params={decodedData.inputsWithIds} />
             </div>
             <div className="abi-decoded-data">
               {Array.from(decodedData.accum.words.entries()).map(

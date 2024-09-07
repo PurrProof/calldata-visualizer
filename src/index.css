@@ -41,8 +41,7 @@ form.textarea {
 }
 
 .param-group {
-  overflow: hidden;
-  margin-left: 0;
+  padding: 5px
 }
 
 .param {
@@ -71,12 +70,12 @@ form.textarea {
   display: inline-block;
 }
 
-.examples button {
+button {
   margin-right: 10px;
 }
 
 form.calldata {
-  width: 50%;
+  width: 75%;
   margin-bottom: 10px;
 }
 
