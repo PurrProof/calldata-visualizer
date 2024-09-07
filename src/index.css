@@ -47,9 +47,14 @@ body {
   text-align: right;
   padding: 10px;
   border: 1px solid #ddd;
+  background: #fff;
   cursor: pointer;
-  margin-bottom: 5px;
+  margin-bottom: 0;
   position: relative;
+}
+
+.param-group .param:first-child {
+  margin-top: 10px;
 }
 
 .bar {

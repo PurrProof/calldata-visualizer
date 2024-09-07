@@ -30,6 +30,8 @@ interface StoreState {
   processSignature: (signature: string) => any[];
   handleDecodeClick: () => void;
   loadExample: (example: IExample) => void;
+  hoveredParamId: number | null;
+  setHoveredParam: (id: number | null) => void;
 }
 
 // zustand store
@@ -39,6 +41,7 @@ const useStore = create<StoreState>((set, get) => ({
   decodedData: null,
   error: null,
   selectedIds: [],
+  hoveredParamId: null, // Initialize hover state
 
   // setters for state
   setSignature: (signature) => set({ signature }),
@@ -101,6 +104,7 @@ const useStore = create<StoreState>((set, get) => ({
     if (!signature) return [];
     return getParamsWithIds(signature);
   },
+  setHoveredParam: (id) => set({ hoveredParamId: id }),
 }));
 
 export default useStore;

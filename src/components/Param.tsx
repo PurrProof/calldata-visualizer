@@ -12,7 +12,7 @@ export interface IParam {
 }
 
 const Param = memo(({ param }: { param: IParam }) => {
-  const { selectedIds, handleParamClick } = useStore();
+  const { selectedIds, handleParamClick, setHoveredParam } = useStore();
   const isSelected = selectedIds.includes(param.id);
 
   return (
@@ -28,6 +28,8 @@ const Param = memo(({ param }: { param: IParam }) => {
           : {}
       }
       onClick={(event) => handleParamClick(param.id, event)} // Pass event to store
+      onMouseOver={(event) => { event.stopPropagation(); setHoveredParam(param.id) }}
+      onMouseLeave={() => setHoveredParam(null)}
     >
       <strong>
         #{param.id} {param.name || "Unnamed"}:

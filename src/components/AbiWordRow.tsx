@@ -16,6 +16,7 @@ const formatOffset = (offset: number): string => {
 
 const AbiWordRow = ({ word, offset }: IAbiWordRowProps) => {
   const selectedIds = useStore((state) => state.selectedIds);
+  const hoveredParamId = useStore((state) => state.hoveredParamId); // Get hover state
   const selectedCoders = selectedIds.filter((id) => word.coders.includes(id)).sort();
 
   return (
@@ -41,7 +42,8 @@ const AbiWordRow = ({ word, offset }: IAbiWordRowProps) => {
               startAnchor="right"
               endAnchor="left"
               color={`${getColor(id)}`}
-              strokeWidth={1}
+              //dashness={hoveredParamId === id ? false : true}
+              strokeWidth={hoveredParamId === id ? 3 : 1}
             />
           </>
         );
