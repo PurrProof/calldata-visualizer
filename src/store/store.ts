@@ -19,7 +19,9 @@ interface StoreState {
   setHoveredParam: (id: number | null) => void;
 
   handleParamClick: (id: number) => void;
-  handleDecodeClick: () => void;
+  decodeCalldata: () => void;
+  clearAll: () => void;
+  clearDecoded: () => void;
 
   resetSelection: () => void;
   processSignature: (signature: string) => any[];
@@ -52,11 +54,25 @@ const useStore = create<StoreState>((set, get) => ({
     set({ selectedIds: newSelectedIds });
   },
 
-  // handle the decode button click
-  handleDecodeClick: () => {
-    const { signature, calldata, resetSelection, setError } = get();
-    resetSelection();
+  clearAll: () => {
+    const { setSignature, setCalldata, clearDecoded } = get();
+    setSignature("");
+    setCalldata("");
+    clearDecoded();
+  },
+
+  clearDecoded: () => {
+    const { resetSelection, setError, setDecodedData, setHoveredParam } = get();
     setError(null);
+    setDecodedData(null);
+    setHoveredParam(null);
+    resetSelection();
+  },
+
+  // handle the decode button click
+  decodeCalldata: () => {
+    const { signature, calldata, clearDecoded } = get();
+    clearDecoded();
     try {
       const result: IDecodedCalldata = abiDecodeCalldata(signature, calldata);
       set({ decodedData: result });
@@ -71,10 +87,10 @@ const useStore = create<StoreState>((set, get) => ({
 
   // load example data into state
   loadExample: (example: IExample) => {
-    const { setSignature, setCalldata, handleDecodeClick } = get();
+    const { setSignature, setCalldata, decodeCalldata } = get();
     setSignature(example.signature);
     setCalldata(example.calldata);
-    handleDecodeClick(); // decode after loading example
+    decodeCalldata(); // decode after loading example
   },
 
   // process the signature and extract parameter ids

@@ -6,14 +6,15 @@ import useStore from './store/store';
 import { IAbiWord } from './types';
 
 const App = () => {
-  const { signature, decodedData, error, processSignature, handleDecodeClick } = useStore();
+  const { signature, decodedData, error, processSignature, decodeCalldata, clearAll } = useStore();
 
   return (
     <>
       <h1>Decoded ABI Parameters Vizualization</h1>
       <InputFields />
-      <button onClick={(event) => { event.stopPropagation(); handleDecodeClick() }}>Decode Data</button>
+      <button onClick={decodeCalldata}>Decode</button >
       <Examples />
+      <button onClick={clearAll}>Clear</button >
 
       {error && <div className="error">{error}</div>}
 
