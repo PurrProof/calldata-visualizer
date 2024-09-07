@@ -31,10 +31,7 @@ const Param = memo(({ param }: { param: IParam }) => {
       onMouseOver={(event) => { event.stopPropagation(); setHoveredParam(param.id) }}
       onMouseLeave={() => setHoveredParam(null)}
     >
-      <strong>
-        #{param.id} {param.name || "Unnamed"}:
-      </strong>{" "}
-      {param.type}
+      <strong>{param.name}</strong> {param.type}
 
       {isSelected && <Bar key={param.id} depth={0} id={param.id} align="right" />}
 

@@ -16,7 +16,7 @@ const assignIdsToParams = (
 ): IProcessedParam[] => {
   return params.map(({ name, type, components }) => ({
     id: idCounter.current++,
-    name: name || "Unnamed",
+    name: name || "",
     type,
     components: components
       ? assignIdsToParams(components, idCounter)
