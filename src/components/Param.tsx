@@ -1,6 +1,6 @@
 import React, { memo, useCallback } from "react";
-import ParamTree from "./ParamTree";
-import "./Param.css";
+import ParamGroup from "./ParamGroup";
+import getColor from "../helpers/colors";
 
 export interface IParam {
   id: number;
@@ -28,7 +28,9 @@ const Param = memo(({ param, onClick, selectedIds }: IParamProps) => {
 
   return (
     <div
-      className={`param ${isSelected ? "selected" + param.id : ""}`}
+      id={`param${param.id}`}
+      className="param"
+      style={isSelected ? { borderRightWidth: "5px", borderRightColor: getColor(param.id) } : {}}
       onClick={handleClick}
     >
       <strong>
@@ -36,7 +38,7 @@ const Param = memo(({ param, onClick, selectedIds }: IParamProps) => {
       </strong>{" "}
       {param.type}
       {param.components && (
-        <ParamTree
+        <ParamGroup
           params={param.components}
           onClick={onClick}
           selectedIds={selectedIds}

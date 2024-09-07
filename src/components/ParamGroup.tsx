@@ -1,14 +1,14 @@
 import { memo } from "react";
 import Param, { IParam } from "./Param";
 
-interface IParamTreeProps {
+interface IParamGroupProps {
   params: IParam[];
   onClick: (id: number) => void;
   selectedIds: number[];
 }
 
-const ParamTree = memo(({ params, onClick, selectedIds }: IParamTreeProps) => (
-  <div className="param-list">
+const ParamGroup = memo(({ params, onClick, selectedIds }: IParamGroupProps) => (
+  <div className="param-group">
     {params.map((param) => (
       <Param
         key={param.id}
@@ -20,4 +20,4 @@ const ParamTree = memo(({ params, onClick, selectedIds }: IParamTreeProps) => (
   </div>
 ));
 
-export default ParamTree;
+export default ParamGroup;

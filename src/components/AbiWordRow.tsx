@@ -1,7 +1,8 @@
 import Bars from "./Bars";
 import { IAbiWord } from "../types/abi";
+import getColor from "../helpers/colors";
 import { hexlify } from "ethers";
-import "./AbiWordRow.css"
+import Xarrow from "react-xarrows";
 
 interface IAbiWordRowProps {
   word: IAbiWord;
@@ -15,8 +16,8 @@ const formatOffset = (offset: number): string => {
 
 const AbiWordRow = ({ word, offset, selectedIds }: IAbiWordRowProps) => (
   <div
+    id={`word${formatOffset(offset)}`}
     className={`row ${word.isIndex ? "index" : "data"}`}
-    style={{ position: "relative" }}
   >
     <div className="column word">
       {hexlify(word.data)}
@@ -25,7 +26,24 @@ const AbiWordRow = ({ word, offset, selectedIds }: IAbiWordRowProps) => (
     <div className="column offset">
       {formatOffset(offset)} — {formatOffset(offset + 31)}
     </div>
-  </div>
+
+    {word.coders.map((coderId) => {
+      const startId = `param${coderId}`;
+      const endId = `word${formatOffset(offset)}`;
+      return (
+        <Xarrow
+          key={`${startId}-${endId}`}
+          start={startId}
+          end={endId}
+          startAnchor="right"
+          endAnchor="left"
+          color={`${getColor(coderId)}`}
+          strokeWidth={1}
+        />
+      );
+    })}
+
+  </div >
 );
 
 export default AbiWordRow;

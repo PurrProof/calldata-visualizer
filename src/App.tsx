@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useRef } from 'react';
 import InputFields from './components/InputFields';
 import Example from './components/ExampleLoader';
-import ParamTree from './components/ParamTree';
+import ParamGroup from './components/ParamGroup';
 import AbiWordRow from './components/AbiWordRow';
 import getParamsWithIds from './helpers/params';
 import useDecoderState from './hooks/useDecoderState';
@@ -73,18 +73,22 @@ const App = () => {
 
       {
         decodedData && (
-          <div className={"decoded"}>
-            <ParamTree params={processedParams} onClick={handleParamClick} selectedIds={selectedIds} />
-            {Array.from(decodedData.accum.words.entries() as [number, IAbiWord][]).map(
-              ([offset, word]: [number, IAbiWord]) =>
-                <AbiWordRow
-                  key={offset}
-                  word={word}
-                  offset={offset}
-                  selectedIds={selectedIds}
-                />
-            )}
-          </div>
+          <div className="abi-decoded-container">
+            <div className="abi-decoded-params">
+              <ParamGroup params={processedParams} onClick={handleParamClick} selectedIds={selectedIds} />
+            </div>
+            <div className="abi-decoded-data">
+              {Array.from(decodedData.accum.words.entries() as [number, IAbiWord][]).map(
+                ([offset, word]: [number, IAbiWord]) =>
+                  <AbiWordRow
+                    key={offset}
+                    word={word}
+                    offset={offset}
+                    selectedIds={selectedIds}
+                  />
+              )}
+            </div>
+          </div >
         )
       }
     </>

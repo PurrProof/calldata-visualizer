@@ -1,5 +1,5 @@
 import { IAbiWord } from "../types/abi";
-import "./Bar.css";
+import getColor from "../helpers/colors";
 
 const Bars = ({
   word,
@@ -16,8 +16,10 @@ const Bars = ({
         .map((id, index) => (
           <div
             key={id}
-            className={`bar selected${id}`}
-            style={{ right: `${index * 6}px` }}
+            className="bar"
+            style={{
+              left: `${index * 5}px`, backgroundColor: getColor(id), borderColor: getColor(id)
+            }}
           />
         ))}
     </>
