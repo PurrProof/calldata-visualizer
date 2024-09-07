@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import type { IExample, IDecodedCalldata, IProcessedParam } from "../types";
 import abiDecodeCalldata from "../helpers/abi";
+import { updateUrlParams, getUrlParams } from "../helpers/url";
 
 // zustand store interface
 interface StoreState {
@@ -26,6 +27,7 @@ interface StoreState {
 
   resetSelection: () => void;
   loadExample: (example: IExample) => void;
+  loadFromUrl: () => void;
 }
 
 // zustand store
@@ -70,11 +72,13 @@ const useStore = create<StoreState>((set, get) => ({
 
   // handle the decode button click
   decodeCalldata: () => {
-    const { signature, calldata, clearDecoded } = get();
+    const { signature, calldata, clearDecoded, selectAllParams } = get();
     clearDecoded();
+    updateUrlParams(signature, calldata);
     try {
       const result: IDecodedCalldata = abiDecodeCalldata(signature, calldata);
       set({ decodedData: result });
+      selectAllParams();
     } catch (error: unknown) {
       const msg = error instanceof Error ? error.message : "unknown error";
       set({ error: `Decoding error: ${msg}` });
@@ -83,14 +87,6 @@ const useStore = create<StoreState>((set, get) => ({
 
   // reset the selection state
   resetSelection: () => set({ selectedIds: [] }),
-
-  // load example data into state
-  loadExample: (example: IExample) => {
-    const { setSignature, setCalldata, decodeCalldata } = get();
-    setSignature(example.signature);
-    setCalldata(example.calldata);
-    decodeCalldata(); // decode after loading example
-  },
 
   selectAllParams: () => {
     const { decodedData } = get();
@@ -110,6 +106,24 @@ const useStore = create<StoreState>((set, get) => ({
 
   deselectAllParams: () => {
     set({ selectedIds: [] });
+  },
+
+  loadExample: (example: IExample) => {
+    const { setSignature, setCalldata, decodeCalldata } = get();
+    setSignature(example.signature);
+    setCalldata(example.calldata);
+    decodeCalldata();
+  },
+
+  loadFromUrl: () => {
+    const { decodeCalldata, setSignature, setCalldata } = get();
+    const { signature, calldata } = getUrlParams();
+    if (!signature || !calldata) {
+      return;
+    }
+    setSignature(decodeURIComponent(signature));
+    setCalldata(decodeURIComponent(calldata));
+    decodeCalldata();
   },
 }));
 

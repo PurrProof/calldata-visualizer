@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import InputFields from './components/InputFields';
 import Examples from './components/Examples';
 import ParamGroup from './components/ParamGroup';
@@ -6,7 +7,16 @@ import useStore from './store/store';
 import { IAbiWord } from './types';
 
 const App = () => {
-  const { decodedData, error, decodeCalldata, clearAll, selectAllParams, deselectAllParams } = useStore();
+  const { decodedData, error, decodeCalldata, clearAll, selectAllParams, deselectAllParams, loadFromUrl } = useStore();
+
+  // useEffect run twice in dev mode because of React.StrictMode
+  const hasLoaded = useRef(false); // ref to track if effect has run
+  useEffect(() => {
+    if (!hasLoaded.current) {
+      loadFromUrl(); // only run once
+      hasLoaded.current = true; // mark as loaded
+    }
+  }, [loadFromUrl]);
 
   return (
     <>
