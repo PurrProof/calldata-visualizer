@@ -23,7 +23,7 @@ const App = () => {
             <ParamGroup params={processSignature(signature)} />
           </div>
           <div className="abi-decoded-data">
-            {Array.from(decodedData.accum.words.entries() as [number, IAbiWord][]).map(
+            {Array.from(decodedData.accum.words.entries()).map(
               ([offset, word]: [number, IAbiWord]) => (
                 <AbiWordRow key={offset} word={word} offset={offset} />
               )
