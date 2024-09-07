@@ -1,5 +1,5 @@
 import useStore from '../store/store';
-import type { IExample } from '../types/abi';
+import type { IExample } from '../types';
 
 const examples: IExample[] = [
   {

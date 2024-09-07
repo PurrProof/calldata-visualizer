@@ -1,5 +1,5 @@
 import Bar from "./Bar";
-import { IAbiWord } from "../types/abi";
+import { IAbiWord } from "../types";
 import getColor from "../helpers/colors";
 import { hexlify } from "ethers";
 import Xarrow from "react-xarrows";

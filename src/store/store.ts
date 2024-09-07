@@ -1,34 +1,29 @@
 import { create } from "zustand";
-import { ethers } from "ethers";
 import getParamsWithIds from "../helpers/params";
-import type { IExample } from "../types/abi";
-
-interface IDecodedData {
-  decoded: any;
-  accum: {
-    words: Map<number, any>;
-  };
-}
+import type { IExample, IDecodedCalldata } from "../types";
+import abiDecodeCalldata from "../helpers/abi";
 
 // zustand store interface
 interface StoreState {
   signature: string;
   calldata: string;
-  decodedData: IDecodedData | null;
+  decodedData: IDecodedCalldata | null;
   error: string | null;
   selectedIds: number[];
+  hoveredParamId: number | null;
+
   setSignature: (signature: string) => void;
   setCalldata: (calldata: string) => void;
-  setDecodedData: (decodedData: IDecodedData | null) => void;
+  setDecodedData: (decodedData: IDecodedCalldata | null) => void;
   setError: (error: string | null) => void;
-  handleParamClick: (id: number) => void;
-  resetSelection: () => void;
-  abiDecode: (signature: string, calldata: string) => IDecodedData | null;
-  processSignature: (signature: string) => any[];
-  handleDecodeClick: () => void;
-  loadExample: (example: IExample) => void;
-  hoveredParamId: number | null;
   setHoveredParam: (id: number | null) => void;
+
+  handleParamClick: (id: number) => void;
+  handleDecodeClick: () => void;
+
+  resetSelection: () => void;
+  processSignature: (signature: string) => any[];
+  loadExample: (example: IExample) => void;
 }
 
 // zustand store
@@ -40,36 +35,12 @@ const useStore = create<StoreState>((set, get) => ({
   selectedIds: [],
   hoveredParamId: null, // Initialize hover state
 
-  // setters for state
+  // setters
   setSignature: (signature) => set({ signature }),
   setCalldata: (calldata) => set({ calldata }),
   setDecodedData: (decodedData) => set({ decodedData }),
   setError: (error) => set({ error }),
-
-  // decode calldata based on the provided signature
-  abiDecode: (signature, calldata): IDecodedData | null => {
-    try {
-      const iface = new ethers.Interface([signature]);
-      const func = iface.getFunction(signature);
-      if (!func) throw new Error("Can't get function by signature");
-
-      const decoded = iface.decodeFunctionData(func, calldata);
-      const accum = ethers.AbiCoder.defaultAbiCoder().getAccumulatedAbiWords();
-
-      return { decoded, accum };
-    } catch (error: any) {
-      console.error("Decoding error:", error);
-      set({ error: `Decoding error: ${error.message}` });
-      return null;
-    }
-  },
-
-  // handle the decode button click
-  handleDecodeClick: () => {
-    const { signature, calldata, abiDecode } = get();
-    const result = abiDecode(signature, calldata);
-    set({ decodedData: result || null });
-  },
+  setHoveredParam: (id) => set({ hoveredParamId: id }),
 
   // handle parameter click
   handleParamClick: (id) => {
@@ -81,14 +52,26 @@ const useStore = create<StoreState>((set, get) => ({
     set({ selectedIds: newSelectedIds });
   },
 
+  // handle the decode button click
+  handleDecodeClick: () => {
+    const { signature, calldata, resetSelection, setError } = get();
+    resetSelection();
+    setError(null);
+    try {
+      const result: IDecodedCalldata = abiDecodeCalldata(signature, calldata);
+      set({ decodedData: result });
+    } catch (error: unknown) {
+      const msg = error instanceof Error ? error.message : "unknown error";
+      set({ error: `Decoding error: ${msg}` });
+    }
+  },
+
   // reset the selection state
   resetSelection: () => set({ selectedIds: [] }),
 
   // load example data into state
   loadExample: (example: IExample) => {
-    const { setSignature, setCalldata, resetSelection, handleDecodeClick } =
-      get();
-    resetSelection();
+    const { setSignature, setCalldata, handleDecodeClick } = get();
     setSignature(example.signature);
     setCalldata(example.calldata);
     handleDecodeClick(); // decode after loading example
@@ -99,7 +82,6 @@ const useStore = create<StoreState>((set, get) => ({
     if (!signature) return [];
     return getParamsWithIds(signature);
   },
-  setHoveredParam: (id) => set({ hoveredParamId: id }),
 }));
 
 export default useStore;

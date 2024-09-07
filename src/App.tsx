@@ -3,7 +3,7 @@ import Examples from './components/Examples';
 import ParamGroup from './components/ParamGroup';
 import AbiWordRow from './components/AbiWordRow';
 import useStore from './store/store';
-import { IAbiWord } from './types/abi';
+import { IAbiWord } from './types';
 
 const App = () => {
   const { signature, decodedData, error, processSignature, handleDecodeClick } = useStore();

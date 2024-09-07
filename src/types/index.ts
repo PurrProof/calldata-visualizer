@@ -9,3 +9,10 @@ export interface IExample {
   signature: string;
   calldata: string;
 }
+
+export interface IDecodedCalldata {
+  decoded: any;
+  accum: {
+    words: Map<number, any>;
+  };
+}
