@@ -39,7 +39,7 @@ const examples: IExample[] = [
 ];
 
 const Examples = () => {
-  const { loadExample } = useStore();
+  const loadExample = useStore((state) => state.loadExample)
 
   return (
     <div className="examples">

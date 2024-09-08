@@ -12,7 +12,14 @@ export interface IParam {
 }
 
 const Param = memo(({ param }: { param: IParam }) => {
-  const { selectedIds, handleParamClick, setHoveredParam } = useStore();
+  const { selectedIds, handleParamClick, setHoveredParam } = useStore(
+    (state) => ({
+      selectedIds: state.selectedIds,
+      handleParamClick: state.handleParamClick,
+      setHoveredParam: state.setHoveredParam,
+    })
+  );
+
   const isSelected = selectedIds.includes(param.id);
 
   return (

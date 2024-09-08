@@ -16,7 +16,9 @@ const formatOffset = (offset: number): string => {
 };
 
 const AbiWordRow = ({ word, offset }: IAbiWordRowProps) => {
-  const { selectedIds, hoveredParamId } = useStore();
+  const selectedIds = useStore((state) => state.selectedIds)
+  const hoveredParamId = useStore((state) => state.hoveredParamId)
+
   const selectedCoders = selectedIds.filter((id) => word.coders.includes(id)).sort();
 
   return (
