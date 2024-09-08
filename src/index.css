@@ -45,6 +45,10 @@ form.textarea {
   right: 0;
 }
 
+.column.offset {
+  white-space: nowrap;
+}
+
 .param-group {
   padding: 5px
 }
