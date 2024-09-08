@@ -2,10 +2,10 @@ import useStore from "../store/store"; // Import Zustand store
 
 const InputFields = () => {
   // Fetch state and setters from Zustand store
-  const { signature, setSignature, calldata, setCalldata } = useStore();
+  const { signature, setSignature, calldata, setCalldata, decodeCalldata } = useStore();
 
   return (
-    <form className="calldata">
+    <form className="calldata" onSubmit={(event) => { event.preventDefault(); decodeCalldata() }}>
       <div>
         <label>Function Signature:</label>
         <input

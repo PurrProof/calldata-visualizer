@@ -1,7 +1,8 @@
 import { create } from "zustand";
 import type { IExample, IDecodedCalldata, IProcessedParam } from "../types";
 import abiDecodeCalldata from "../helpers/abi";
-import { updateUrlParams, getUrlParams } from "../helpers/url";
+import { getUrlParams, clearUrlParams } from "../helpers/url";
+import { validateHex, validateFragment } from "../helpers/security";
 
 // zustand store interface
 interface StoreState {
@@ -23,6 +24,7 @@ interface StoreState {
   clearAll: () => void;
   clearDecoded: () => void;
   selectAllParams: () => void;
+  validateInputs: (signature: string, calldata: string) => boolean;
 
   resetSelection: () => void;
   loadExample: (example: IExample) => void;
@@ -71,16 +73,27 @@ const useStore = create<StoreState>((set, get) => ({
 
   // handle the decode button click
   decodeCalldata: () => {
-    const { signature, calldata, clearDecoded, selectAllParams } = get();
+    const {
+      signature,
+      calldata,
+      clearDecoded,
+      selectAllParams,
+      setError,
+      setDecodedData,
+      validateInputs,
+    } = get();
     clearDecoded();
-    updateUrlParams(signature, calldata);
+
+    if (!validateInputs(signature, calldata)) {
+      return;
+    }
+
     try {
       const result: IDecodedCalldata = abiDecodeCalldata(signature, calldata);
-      set({ decodedData: result });
+      setDecodedData(result);
       selectAllParams();
     } catch (error: unknown) {
-      const msg = error instanceof Error ? error.message : "unknown error";
-      set({ error: `Decoding error: ${msg}` });
+      setError(error instanceof Error ? error.message : "unknown error");
     }
   },
 
@@ -103,6 +116,24 @@ const useStore = create<StoreState>((set, get) => ({
     set({ selectedIds: collectAllParamIds(decodedData.inputsWithIds) });
   },
 
+  validateInputs: (signature: string, calldata: string): boolean => {
+    const { setError } = get();
+    if (signature === "" || calldata === "") {
+      setError(signature === "" ? "Empty calldata." : "Empty signature.");
+      return false;
+    }
+
+    try {
+      validateHex(calldata);
+      validateFragment(signature);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : "Invalid input.");
+      return false;
+    }
+
+    return true;
+  },
+
   loadExample: (example: IExample) => {
     const { setSignature, setCalldata, decodeCalldata, clearAll } = get();
 
@@ -117,15 +148,34 @@ const useStore = create<StoreState>((set, get) => ({
   },
 
   loadFromUrl: () => {
-    const { decodeCalldata, setSignature, setCalldata, clearAll } = get();
+    const {
+      decodeCalldata,
+      setSignature,
+      setCalldata,
+      clearAll,
+      validateInputs,
+    } = get();
+
+    clearAll();
+
     const { signature, calldata } = getUrlParams();
-    if (!signature || !calldata) {
+
+    // this is normal situation for the start
+    if (signature === "" && calldata === "") {
       return;
     }
-    clearAll();
-    setSignature(decodeURIComponent(signature));
-    setCalldata(decodeURIComponent(calldata));
+
+    // pre-validate here, don't allow invalid values from url
+    if (!validateInputs(signature, calldata)) {
+      return;
+    }
+
+    setSignature(signature);
+    setCalldata(calldata);
     decodeCalldata();
+
+    // design decision is don't keep url
+    clearUrlParams();
   },
 }));
 

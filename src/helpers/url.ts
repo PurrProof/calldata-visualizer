@@ -1,16 +1,16 @@
-// get query parameters from URL
 export const getUrlParams = (): {
-  signature: string | null;
-  calldata: string | null;
+  signature: string;
+  calldata: string;
 } => {
   const searchParams = new URLSearchParams(window.location.search);
+  const sig = searchParams.get("signature");
+  const data = searchParams.get("calldata");
   return {
-    signature: searchParams.get("signature"),
-    calldata: searchParams.get("calldata"),
+    signature: sig ? decodeURIComponent(sig) : "",
+    calldata: data ? decodeURIComponent(data) : "",
   };
 };
 
-// update query parameters in the URL without reloading the page
 export const updateUrlParams = (signature: string, calldata: string): void => {
   const searchParams = new URLSearchParams();
 
@@ -18,7 +18,7 @@ export const updateUrlParams = (signature: string, calldata: string): void => {
   if (calldata) searchParams.set("calldata", encodeURIComponent(calldata));
 
   const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
-  window.history.pushState({}, "", newUrl); // Update the URL without reloading
+  window.history.pushState({}, "", newUrl); // update the URL without reloading
 };
 
 // clear query parameters from the URL
