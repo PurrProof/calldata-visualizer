@@ -37,7 +37,7 @@ importers:
         version: 3.3.3
       ethers:
         specifier: github:PurrProof/ethers.js#feat/accum-decode
-        version: https://codeload.github.com/PurrProof/ethers.js/tar.gz/dc01b1b37a9f3bd7065517fe2b5d857632f80ced
+        version: https://codeload.github.com/PurrProof/ethers.js/tar.gz/4456700d4c27de28ae2ec969f86925f03167e63c
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -1897,8 +1897,8 @@ packages:
     resolution: {integrity: sha512-NIxF55hv4nSqQswkAeiOi1r83xy8JldOFDTWiug55KBu9Jnblncd2U6ViHmYgHf01TPZS77NJBhBMKdWj9HQMQ==}
     engines: {node: '>=8'}
 
-  cjs-module-lexer@1.4.0:
-    resolution: {integrity: sha512-N1NGmowPlGBLsOZLPvm48StN04V4YvQRL0i6b7ctrVY3epjP/ct7hFLOItz6pDIvRjwpfPxi52a2UWV2ziir8g==}
+  cjs-module-lexer@1.4.1:
+    resolution: {integrity: sha512-cuSVIHi9/9E/+821Qjdvngor+xpnlwnuwIyZOaLmHBVdXL+gP+I6QQB9VkO7RI77YIcTV+S1W9AreJ5eN63JBA==}
 
   clean-css@5.3.3:
     resolution: {integrity: sha512-D5J+kHaVb/wKSFcyyV75uCn8fiY4sV38XJoe4CUyGQ+mOU/fMVYUdH1hJC+CJQ5uY3EnW27SbJYS4X8BiLrAFg==}
@@ -2354,8 +2354,8 @@ packages:
     engines: {node: '>=0.10.0'}
     hasBin: true
 
-  electron-to-chromium@1.5.17:
-    resolution: {integrity: sha512-Q6Q+04tjC2KJ8qsSOSgovvhWcv5t+SmpH6/YfAWmhpE5/r+zw6KQy1/yWVFFNyEBvy68twTTXr2d5eLfCq7QIw==}
+  electron-to-chromium@1.5.18:
+    resolution: {integrity: sha512-1OfuVACu+zKlmjsNdcJuVQuVE61sZOLbNM4JAQ1Rvh6EOj0/EUKhMJjRH73InPlXSh8HIJk1cVZ8pyOV/FMdUQ==}
 
   emittery@0.10.2:
     resolution: {integrity: sha512-aITqOwnLanpHLNXZJENbOgjUBeHocD+xsSJmNrjovKBW5HbSpW3d1pEls7GFQPUWXiwG9+0P4GtHfEqC/4M0Iw==}
@@ -2619,8 +2619,8 @@ packages:
     resolution: {integrity: sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==}
     engines: {node: '>= 0.6'}
 
-  ethers@https://codeload.github.com/PurrProof/ethers.js/tar.gz/dc01b1b37a9f3bd7065517fe2b5d857632f80ced:
-    resolution: {tarball: https://codeload.github.com/PurrProof/ethers.js/tar.gz/dc01b1b37a9f3bd7065517fe2b5d857632f80ced}
+  ethers@https://codeload.github.com/PurrProof/ethers.js/tar.gz/4456700d4c27de28ae2ec969f86925f03167e63c:
+    resolution: {tarball: https://codeload.github.com/PurrProof/ethers.js/tar.gz/4456700d4c27de28ae2ec969f86925f03167e63c}
     version: 6.13.2
     engines: {node: '>=14.0.0'}
 
@@ -7822,7 +7822,7 @@ snapshots:
   browserslist@4.23.3:
     dependencies:
       caniuse-lite: 1.0.30001658
-      electron-to-chromium: 1.5.17
+      electron-to-chromium: 1.5.18
       node-releases: 2.0.18
       update-browserslist-db: 1.1.0(browserslist@4.23.3)
 
@@ -7908,7 +7908,7 @@ snapshots:
 
   ci-info@3.9.0: {}
 
-  cjs-module-lexer@1.4.0: {}
+  cjs-module-lexer@1.4.1: {}
 
   clean-css@5.3.3:
     dependencies:
@@ -8359,7 +8359,7 @@ snapshots:
     dependencies:
       jake: 10.9.2
 
-  electron-to-chromium@1.5.17: {}
+  electron-to-chromium@1.5.18: {}
 
   emittery@0.10.2: {}
 
@@ -8764,7 +8764,7 @@ snapshots:
 
   etag@1.8.1: {}
 
-  ethers@https://codeload.github.com/PurrProof/ethers.js/tar.gz/dc01b1b37a9f3bd7065517fe2b5d857632f80ced:
+  ethers@https://codeload.github.com/PurrProof/ethers.js/tar.gz/4456700d4c27de28ae2ec969f86925f03167e63c:
     dependencies:
       '@adraffy/ens-normalize': 1.10.1
       '@noble/curves': 1.2.0
@@ -9742,7 +9742,7 @@ snapshots:
       '@jest/transform': 27.5.1
       '@jest/types': 27.5.1
       chalk: 4.1.2
-      cjs-module-lexer: 1.4.0
+      cjs-module-lexer: 1.4.1
       collect-v8-coverage: 1.0.2
       execa: 5.1.1
       glob: 7.2.3

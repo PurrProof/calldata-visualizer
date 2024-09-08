@@ -1,3 +1,5 @@
+import { Coder } from "ethers";
+
 export interface IAbiWord {
   data: Uint8Array;
   coders: number[];
@@ -21,6 +23,7 @@ export interface IDecodedCalldata {
   decoded: any;
   accum: {
     words: Map<number, any>;
+    coders: Coder[];
   };
   inputsWithIds: IProcessedParam[];
 }

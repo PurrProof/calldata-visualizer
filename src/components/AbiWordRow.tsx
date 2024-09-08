@@ -5,6 +5,7 @@ import getColor from "../helpers/colors";
 import { hexlify } from "ethers";
 import Xarrow from "react-xarrows";
 import useStore from '../store/store';
+import { Coder } from "ethers";
 
 interface IAbiWordRowProps {
   word: IAbiWord;
@@ -16,20 +17,31 @@ const formatOffset = (offset: number): string => {
 };
 
 const AbiWordRow = ({ word, offset }: IAbiWordRowProps) => {
-  const selectedIds = useStore((state) => state.selectedIds)
-  const hoveredParamId = useStore((state) => state.hoveredParamId)
-
+  const { selectedIds, hoveredParamId, decodedData } = useStore((state) => ({
+    selectedIds: state.selectedIds,
+    hoveredParamId: state.hoveredParamId,
+    decodedData: state.decodedData,
+  }));
+  const coders: Coder[] = decodedData ? decodedData.accum.coders : [];
   const selectedCoders = selectedIds.filter((id) => word.coders.includes(id)).sort();
+  const innerCoderId = word.coders[word.coders.length - 1];
 
   return (
-    <div id={`word${formatOffset(offset)}`} key={`word${formatOffset(offset)}`} className={`row ${word.isIndex ? "index" : "data"}`}>
+    <div
+      id={`word${formatOffset(offset)}`}
+      key={`word${formatOffset(offset)}`}
+      className="row"
+    >
       <div className="column word">
         {hexlify(word.data)}
+        <div className="tags">
+          <span className="tag">{coders[innerCoderId].name}</span>
+          <span className="tag">{coders[innerCoderId].dynamic ? "dynamic" : "static"}</span>
+          <span className="tag">{word.isIndex ? "index" : "data"}</span>
+        </div>
       </div>
 
-      <div className="column offset">
-        {formatOffset(offset)} — {formatOffset(offset + 31)}
-      </div>
+      <div className="column offset">{formatOffset(offset)} — {formatOffset(offset + 31)}</div>
 
       {selectedCoders.map((id, index) => {
         const startId = `param${id}`;
