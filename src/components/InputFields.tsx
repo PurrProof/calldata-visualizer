@@ -14,8 +14,9 @@ const InputFields = () => {
   return (
     <form className="calldata" onSubmit={(event) => { event.preventDefault(); decodeCalldata() }}>
       <div>
-        <label>Function Signature:</label>
+        <label htmlFor="f-sig">Function Signature:</label>
         <input
+          id="f-sig"
           type="text"
           value={signature}
           onChange={(e) => setSignature(e.target.value)}
@@ -24,8 +25,9 @@ const InputFields = () => {
         />
       </div>
       <div>
-        <label>Calldata:</label>
+        <label htmlFor="f-calldata">Calldata:</label>
         <textarea
+          id="f-calldata"
           value={calldata}
           onChange={(e) => setCalldata(e.target.value)}
           placeholder="Enter calldata"
