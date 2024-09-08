@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import type { IExample, IDecodedCalldata, IProcessedParam } from "../types";
 import abiDecodeCalldata from "../helpers/abi";
-import { getUrlParams, clearUrlParams } from "../helpers/url";
+import { getUrlParams, clearUrl } from "../helpers/url";
 import { validateHex, validateFragment } from "../helpers/security";
 
 // zustand store interface
@@ -175,7 +175,7 @@ const useStore = create<StoreState>((set, get) => ({
     decodeCalldata();
 
     // design decision is don't keep url
-    clearUrlParams();
+    clearUrl();
   },
 }));
 

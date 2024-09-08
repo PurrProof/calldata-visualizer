@@ -3,11 +3,28 @@ import InputFields from './components/InputFields';
 import Examples from './components/Examples';
 import ParamGroup from './components/ParamGroup';
 import AbiWordRow from './components/AbiWordRow';
+import CopyUrlButton from './components/CopyUrlButton';
 import useStore from './store/store';
-import { IAbiWord } from './types';
+import type { IAbiWord } from './types';
 
 const App = () => {
-  const { decodedData, error, decodeCalldata, clearAll, selectAllParams, resetSelection, loadFromUrl } = useStore();
+  const {
+    decodedData,
+    error,
+    decodeCalldata,
+    clearAll,
+    selectAllParams,
+    resetSelection,
+    loadFromUrl
+  } = useStore((state) => ({
+    decodedData: state.decodedData,
+    error: state.error,
+    decodeCalldata: state.decodeCalldata,
+    clearAll: state.clearAll,
+    selectAllParams: state.selectAllParams,
+    resetSelection: state.resetSelection,
+    loadFromUrl: state.loadFromUrl,
+  }));
 
   // useEffect run twice in dev mode because of React.StrictMode
   const hasLoaded = useRef(false); // ref to track if effect has run
@@ -26,6 +43,7 @@ const App = () => {
       <button onClick={clearAll}>Clear</button >
       <button onClick={selectAllParams}>Select All</button >
       <button onClick={resetSelection}>Deselect All</button >
+      <CopyUrlButton />
       <Examples />
 
       {error && <div className="error">{error}</div>}

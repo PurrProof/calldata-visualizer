@@ -11,7 +11,7 @@ export const getUrlParams = (): {
   };
 };
 
-export const updateUrlParams = (signature: string, calldata: string): void => {
+export const updateUrl = (signature: string, calldata: string): void => {
   const searchParams = new URLSearchParams();
 
   if (signature) searchParams.set("signature", encodeURIComponent(signature));
@@ -21,8 +21,15 @@ export const updateUrlParams = (signature: string, calldata: string): void => {
   window.history.pushState({}, "", newUrl); // update the URL without reloading
 };
 
-// clear query parameters from the URL
-export const clearUrlParams = (): void => {
+export const clearUrl = (): void => {
   const newUrl = window.location.pathname;
   window.history.pushState({}, "", newUrl);
+};
+
+export const generateUrl = (signature: string, calldata: string): string => {
+  const baseUrl = `${window.location.origin}${window.location.pathname}`;
+  const url = new URL(baseUrl);
+  url.searchParams.set("signature", encodeURIComponent(signature));
+  url.searchParams.set("calldata", encodeURIComponent(calldata));
+  return url.toString();
 };
