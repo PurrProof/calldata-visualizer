@@ -38,13 +38,13 @@ const App = () => {
   return (
     <>
       <h1>ABI CallData Visualizer</h1>
+      <Examples />
       <InputFields />
       <button onClick={decodeCalldata}>Decode</button >
       <button onClick={clearAll}>Clear</button >
       <button onClick={selectAllParams}>Select All</button >
       <button onClick={resetSelection}>Deselect All</button >
       <CopyUrlButton />
-      <Examples />
 
       {error && <div className="error">{error}</div>}
 

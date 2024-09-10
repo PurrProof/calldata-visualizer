@@ -1,5 +1,6 @@
 body,
 form input,
+button,
 form.textarea {
   font-family: "Courier New", Courier, monospace;
   font-size: 14px;
@@ -99,7 +100,6 @@ form.textarea {
 }
 
 .examples {
-  margin-left: 30px;
   display: inline-block;
 }
 
