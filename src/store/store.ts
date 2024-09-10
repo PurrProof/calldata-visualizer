@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { IExample, IDecodedCalldata, IProcessedParam } from "../types";
+import type { IExample, IDecodedCalldata } from "../types";
 import abiDecodeCalldata from "../helpers/abi";
 import { getUrlParams, clearUrl } from "../helpers/url";
 import { validateHex, validateFragment } from "../helpers/security";
@@ -102,18 +102,12 @@ const useStore = create<StoreState>((set, get) => ({
 
   selectAllParams: () => {
     const { decodedData } = get();
-
-    // if there's no decoded data, return
-    if (!decodedData?.inputsWithIds) return;
-
-    // recursive function to collect all param ids
-    const collectAllParamIds = (params: IProcessedParam[]): number[] =>
-      params.flatMap((param) => [
-        param.id,
-        ...(param.components ? collectAllParamIds(param.components) : []),
-      ]);
-
-    set({ selectedIds: collectAllParamIds(decodedData.inputsWithIds) });
+    set({
+      selectedIds: Array.from(
+        { length: decodedData?.accum.coders.length ?? 0 },
+        (_, index) => index
+      ),
+    });
   },
 
   validateInputs: (signature: string, calldata: string): boolean => {

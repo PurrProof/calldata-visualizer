@@ -52,7 +52,7 @@ const App = () => {
         decodedData && (
           <div className="abi-decoded-container">
             <div className="abi-decoded-params">
-              <ParamGroup params={decodedData.inputsWithIds} />
+              <ParamGroup nodes={decodedData.accum.codersTree.children} />
             </div>
             <div className="abi-decoded-data">
               {Array.from(decodedData.accum.words.entries()).map(

@@ -1,5 +1,5 @@
-import { ethers, ParamType } from "ethers";
-import type { IDecodedCalldata, IProcessedParam } from "../types/";
+import { ethers } from "ethers";
+import type { IDecodedCalldata } from "../types/";
 
 export const abiDecodeCalldata = (
   signature: string,
@@ -11,24 +11,10 @@ export const abiDecodeCalldata = (
 
   const decoded = iface.decodeFunctionData(func, calldata);
   const accum = ethers.AbiCoder.defaultAbiCoder().getAccumulatedAbiWords();
-  const inputsWithIds: IProcessedParam[] = assignIdsToParams(func.inputs);
 
-  return { decoded, accum, inputsWithIds };
-};
+  console.log(accum);
 
-// recursively assign IDs to function parameters and return them with IDs.
-export const assignIdsToParams = (
-  params: readonly ParamType[],
-  idCounter: { current: number } = { current: 0 }
-): IProcessedParam[] => {
-  return params.map(({ name, type, components }) => ({
-    id: idCounter.current++,
-    name: name || "",
-    type,
-    components: components
-      ? assignIdsToParams(components, idCounter)
-      : undefined, // Recursively handle components
-  }));
+  return { decoded, accum };
 };
 
 export default abiDecodeCalldata;

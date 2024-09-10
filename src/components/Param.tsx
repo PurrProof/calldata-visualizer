@@ -3,48 +3,44 @@ import ParamGroup from "./ParamGroup";
 //import Bar from "./Bar";
 import getColor from "../helpers/colors";
 import useStore from "../store/store";
+import { AbiCodersTreeNode } from "ethers"
 
-export interface IParam {
-  id: number;
-  name?: string;
-  type: string;
-  components?: IParam[];
-}
-
-const Param = memo(({ param }: { param: IParam }) => {
-  const { selectedIds, handleParamClick, setHoveredParam } = useStore(
+const Param = memo(({ node }: { node: AbiCodersTreeNode }) => {
+  const { selectedIds, handleParamClick, setHoveredParam, decodedData } = useStore(
     (state) => ({
       selectedIds: state.selectedIds,
       handleParamClick: state.handleParamClick,
       setHoveredParam: state.setHoveredParam,
+      decodedData: state.decodedData,
     })
   );
 
-  const isSelected = selectedIds.includes(param.id);
+  const isSelected = selectedIds.includes(node.coderId);
 
   return (
     <div
-      id={`param${param.id}`}
-      className="param"
+      id={`param${node.coderId}`}
+      className={`param ${decodedData?.accum.coders[node.coderId].constructor.name === "AnonymousCoder" ? "anonymous" : ""}`}
       style={
         isSelected
           ? {
-            backgroundColor: getColor(param.id),
-            borderColor: getColor(param.id),
+            backgroundColor: getColor(node.coderId),
+            borderColor: getColor(node.coderId),
           }
           : {}
       }
-      onClick={(event) => { event.stopPropagation(); handleParamClick(param.id) }}
-      onMouseOver={(event) => { event.stopPropagation(); setHoveredParam(param.id) }}
+      onClick={(event) => { event.stopPropagation(); handleParamClick(node.coderId) }}
+      onMouseOver={(event) => { event.stopPropagation(); setHoveredParam(node.coderId) }}
       onMouseLeave={() => setHoveredParam(null)}
     >
-      <strong>{param.name}</strong> {param.type}
+
+      <strong>{decodedData?.accum.coders[node.coderId].name}</strong> {decodedData?.accum.coders[node.coderId].type}
 
       {/* don't render bar, because we set bg for now 
       isSelected && <Bar key={param.id} depth={0} id={param.id} align="right" />*/}
 
-      {param.components && <ParamGroup params={param.components} />}
-    </div>
+      {node.children && node.children.length && <ParamGroup nodes={node.children} />}
+    </div >
   );
 });
 

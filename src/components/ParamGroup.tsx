@@ -1,17 +1,14 @@
 import { memo } from "react";
-import Param, { IParam } from "./Param";
+import Param from "./Param";
+import { AbiCodersTreeNode } from "ethers";
 
-interface IParamGroupProps {
-  params: IParam[];
-}
-
-const ParamGroup = memo(({ params }: IParamGroupProps) => {
+const ParamGroup = memo(({ nodes }: { nodes: AbiCodersTreeNode[] }) => {
   return (
     <div className="param-group">
-      {params.map((param) => (
+      {nodes.map((node) => (
         <Param
-          key={param.id}
-          param={param}
+          key={node.coderId}
+          node={node}
         />
       ))}
     </div>

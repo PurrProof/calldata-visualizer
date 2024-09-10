@@ -1,4 +1,4 @@
-import { Coder } from "ethers";
+import { AbiCodersTreeNode, AbiWordOffsetMap, Coder } from "ethers";
 
 export interface IAbiWord {
   data: Uint8Array;
@@ -12,18 +12,11 @@ export interface IExample {
   calldata: string;
 }
 
-export interface IProcessedParam {
-  id: number;
-  name?: string;
-  type: string;
-  components?: IProcessedParam[]; // Recursive type for nested components
-}
-
 export interface IDecodedCalldata {
   decoded: any;
   accum: {
-    words: Map<number, any>;
+    words: AbiWordOffsetMap;
     coders: Coder[];
+    codersTree: AbiCodersTreeNode;
   };
-  inputsWithIds: IProcessedParam[];
 }

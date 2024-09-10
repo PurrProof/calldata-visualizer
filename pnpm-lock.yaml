@@ -37,7 +37,7 @@ importers:
         version: 3.3.3
       ethers:
         specifier: github:PurrProof/ethers.js#feat/accum-decode
-        version: https://codeload.github.com/PurrProof/ethers.js/tar.gz/4456700d4c27de28ae2ec969f86925f03167e63c
+        version: https://codeload.github.com/PurrProof/ethers.js/tar.gz/b528388a76eb1e6a18c84a50c51286d8c53fdc5f
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -2619,8 +2619,8 @@ packages:
     resolution: {integrity: sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==}
     engines: {node: '>= 0.6'}
 
-  ethers@https://codeload.github.com/PurrProof/ethers.js/tar.gz/4456700d4c27de28ae2ec969f86925f03167e63c:
-    resolution: {tarball: https://codeload.github.com/PurrProof/ethers.js/tar.gz/4456700d4c27de28ae2ec969f86925f03167e63c}
+  ethers@https://codeload.github.com/PurrProof/ethers.js/tar.gz/b528388a76eb1e6a18c84a50c51286d8c53fdc5f:
+    resolution: {tarball: https://codeload.github.com/PurrProof/ethers.js/tar.gz/b528388a76eb1e6a18c84a50c51286d8c53fdc5f}
     version: 6.13.2
     engines: {node: '>=14.0.0'}
 
@@ -8764,7 +8764,7 @@ snapshots:
 
   etag@1.8.1: {}
 
-  ethers@https://codeload.github.com/PurrProof/ethers.js/tar.gz/4456700d4c27de28ae2ec969f86925f03167e63c:
+  ethers@https://codeload.github.com/PurrProof/ethers.js/tar.gz/b528388a76eb1e6a18c84a50c51286d8c53fdc5f:
     dependencies:
       '@adraffy/ens-normalize': 1.10.1
       '@noble/curves': 1.2.0

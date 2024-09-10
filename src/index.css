@@ -64,6 +64,15 @@ form.textarea {
   position: relative;
 }
 
+.param.anonymous::before {
+  content: "•";
+  position: relative;
+  margin-right: 5px;
+  left: -5px;
+  display: inline-block;
+  font-weight: bold;
+}
+
 .param-group .param:first-child {
   margin-top: 10px;
 }
