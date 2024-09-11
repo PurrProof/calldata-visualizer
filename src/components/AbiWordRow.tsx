@@ -52,7 +52,6 @@ const renderChunkRow = (
             gridBreak={(-15 - innerCoderId * 5).toString()}
             strokeWidth={2}
             labels={{ end: <div className="label" style={{ color: bgColor }}>{"0x" + ethers.toNumber(chunk).toString(16)}</div> }}
-          //labels=
           />
         )}
 
