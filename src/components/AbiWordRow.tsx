@@ -71,7 +71,7 @@ const AbiWordRow = ({ word, offset }: IAbiWordRowProps) => {
 
   const { rows } = useMemo(() => {
     const coders: Coder[] = decodedData?.accum.coders || [];
-    const selectedCoders = selectedIds.filter(id => word.coders.includes(id)).sort();
+    const selectedCoders = selectedIds.filter(id => word.coders.includes(id)).sort((a, b) => a - b);
     const innerCoderId = word.coders[word.coders.length - 1];
 
     const rowList = [];
