@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useMemo } from "react";
 import Bar from "./Bar";
 import { IAbiWord } from "../types";
 import getColor from "../helpers/colors";
@@ -12,9 +12,56 @@ interface IAbiWordRowProps {
   offset: number;
 }
 
-const formatOffset = (offset: number): string => {
-  return "0x" + offset.toString(16).toUpperCase().padStart(4, "0");
-};
+const formatOffset = (offset: number): string =>
+  `0x${offset.toString(16).toUpperCase().padStart(4, "0")}`;
+
+const renderChunkRow = (
+  chunk: Uint8Array,
+  currentOffset: number,
+  word: IAbiWord,
+  coders: Coder[],
+  selectedCoders: number[],
+  hoveredParamId: number | null,
+  innerCoderId: number
+) => (
+  <div
+    key={`word${formatOffset(currentOffset)}`}
+    id={`word${formatOffset(currentOffset)}`}
+    className="row"
+  >
+    <div className="column word">
+      <div className="chunk">{`0x${hexlify(chunk)}`}</div>
+      <div className="tags">
+        <span className="tag">{coders[innerCoderId]?.name}</span>
+        <span className="tag">{coders[innerCoderId]?.dynamic ? "dynamic" : "static"}</span>
+        <span className="tag">{word.isIndex ? "index" : "data"}</span>
+      </div>
+    </div>
+
+    <div className="column offset">
+      {formatOffset(currentOffset)} — {formatOffset(currentOffset + 31)}
+    </div>
+
+    {selectedCoders.map((id, index) => {
+      const startId = `param${id}`;
+      const endId = `word${formatOffset(currentOffset)}`;
+
+      return (
+        <Fragment key={id}>
+          <Bar depth={index} id={id} align="left" />
+          <Xarrow
+            start={startId}
+            end={endId}
+            startAnchor="right"
+            endAnchor="left"
+            color={getColor(id)}
+            strokeWidth={hoveredParamId === id ? 3 : 1}
+          />
+        </Fragment>
+      );
+    })}
+  </div>
+);
 
 const AbiWordRow = ({ word, offset }: IAbiWordRowProps) => {
   const { selectedIds, hoveredParamId, decodedData } = useStore((state) => ({
@@ -22,48 +69,31 @@ const AbiWordRow = ({ word, offset }: IAbiWordRowProps) => {
     hoveredParamId: state.hoveredParamId,
     decodedData: state.decodedData,
   }));
-  const coders: Coder[] = decodedData ? decodedData.accum.coders : [];
-  const selectedCoders = selectedIds.filter((id) => word.coders.includes(id)).sort();
-  const innerCoderId = word.coders[word.coders.length - 1];
 
-  return (
-    <div
-      id={`word${formatOffset(offset)}`}
-      key={`word${formatOffset(offset)}`}
-      className="row"
-    >
-      <div className="column word">
-        {hexlify(word.data)}
-        <div className="tags">
-          <span className="tag">{coders[innerCoderId].name}</span>
-          <span className="tag">{coders[innerCoderId].dynamic ? "dynamic" : "static"}</span>
-          <span className="tag">{word.isIndex ? "index" : "data"}</span>
-        </div>
-      </div>
+  const { rows } = useMemo(() => {
+    const coders: Coder[] = decodedData?.accum.coders || [];
+    const selectedCoders = selectedIds.filter(id => word.coders.includes(id)).sort();
+    const innerCoderId = word.coders[word.coders.length - 1];
 
-      <div className="column offset">{formatOffset(offset)} — {formatOffset(offset + 31)}</div>
+    const rowList = [];
+    let rest = word.data;
+    let currentOffset = offset;
 
-      {selectedCoders.map((id, index) => {
-        const startId = `param${id}`;
-        const endId = `word${formatOffset(offset)}`;
-        return (
-          <Fragment key={id}>  {/* Use React.Fragment with a key */}
-            <Bar key={id} depth={index} id={id} align="left" />
-            <Xarrow
-              key={`${startId}-${endId}`}
-              start={startId}
-              end={endId}
-              startAnchor="right"
-              endAnchor="left"
-              color={`${getColor(id)}`}
-              //dashness={hoveredParamId === id ? false : true}
-              strokeWidth={hoveredParamId === id ? 3 : 1}
-            />
-          </Fragment>
-        );
-      })}
-    </div >
-  );
+    while (rest.length > 0) {
+      const chunk = rest.slice(0, 32);
+      rest = rest.slice(32);
+
+      rowList.push(
+        renderChunkRow(chunk, currentOffset, word, coders, selectedCoders, hoveredParamId, innerCoderId)
+      );
+
+      currentOffset += 32;
+    }
+
+    return { coders, selectedCoders, innerCoderId, rows: rowList };
+  }, [word, offset, selectedIds, decodedData, hoveredParamId]);
+
+  return <>{rows}</>;
 };
 
 export default AbiWordRow;
