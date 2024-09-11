@@ -5,7 +5,7 @@ import ParamGroup from './components/ParamGroup';
 import AbiWordRow from './components/AbiWordRow';
 import CopyUrlButton from './components/CopyUrlButton';
 import useStore from './store/store';
-import type { IAbiWord } from './types';
+import type { AbiWord } from 'ethers';
 
 const App = () => {
   const {
@@ -56,7 +56,7 @@ const App = () => {
             </div>
             <div className="abi-decoded-data">
               {Array.from(decodedData.accum.words.entries()).map(
-                ([offset, word]: [number, IAbiWord]) => (
+                ([offset, word]: [number, AbiWord]) => (
                   <AbiWordRow key={offset} word={word} offset={offset} />
                 )
               )}

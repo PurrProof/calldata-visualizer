@@ -99,6 +99,18 @@ form.textarea {
   text-align: center;
 }
 
+.tag.offset {
+  background-color: #4A90E2;
+}
+
+.tag.count {
+  background-color: #50E3C2;
+}
+
+.tag.length {
+  background-color: #BD10E0;
+}
+
 .examples {
   display: inline-block;
 }

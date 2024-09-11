@@ -1,14 +1,13 @@
 import { Fragment, useMemo } from "react";
 import Bar from "./Bar";
-import { IAbiWord } from "../types";
 import getColor from "../helpers/colors";
 import { hexlify } from "ethers";
 import Xarrow from "react-xarrows";
 import useStore from '../store/store';
-import { Coder } from "ethers";
+import type { Coder, AbiWord } from "ethers";
 
 interface IAbiWordRowProps {
-  word: IAbiWord;
+  word: AbiWord;
   offset: number;
 }
 
@@ -18,7 +17,7 @@ const formatOffset = (offset: number): string =>
 const renderChunkRow = (
   chunk: Uint8Array,
   currentOffset: number,
-  word: IAbiWord,
+  word: AbiWord,
   coders: Coder[],
   selectedCoders: number[],
   hoveredParamId: number | null,
@@ -32,9 +31,7 @@ const renderChunkRow = (
     <div className="column word">
       <div className="chunk">{hexlify(chunk)}</div>
       <div className="tags">
-        <span className="tag">{coders[innerCoderId]?.name}</span>
-        <span className="tag">{coders[innerCoderId]?.dynamic ? "dynamic" : "static"}</span>
-        <span className="tag">{word.isIndex ? "index" : "data"}</span>
+        {word.role && <span className={`tag ${word.role}`}>{word.role}</span>}
       </div>
     </div>
 
@@ -42,25 +39,27 @@ const renderChunkRow = (
       {formatOffset(currentOffset)} — {formatOffset(currentOffset + 31)}
     </div>
 
-    {selectedCoders.map((id, index) => {
-      const startId = `param${id}`;
-      const endId = `word${formatOffset(currentOffset)}`;
+    {
+      selectedCoders.map((id, index) => {
+        const startId = `param${id}`;
+        const endId = `word${formatOffset(currentOffset)}`;
 
-      return (
-        <Fragment key={id}>
-          <Bar depth={index} id={id} align="left" />
-          <Xarrow
-            start={startId}
-            end={endId}
-            startAnchor="right"
-            endAnchor="left"
-            color={getColor(id)}
-            strokeWidth={hoveredParamId === id ? 3 : 1}
-          />
-        </Fragment>
-      );
-    })}
-  </div>
+        return (
+          <Fragment key={id}>
+            <Bar depth={index} id={id} align="left" />
+            <Xarrow
+              start={startId}
+              end={endId}
+              startAnchor="right"
+              endAnchor="left"
+              color={getColor(id)}
+              strokeWidth={hoveredParamId === id ? 3 : 1}
+            />
+          </Fragment>
+        );
+      })
+    }
+  </div >
 );
 
 const AbiWordRow = ({ word, offset }: IAbiWordRowProps) => {
