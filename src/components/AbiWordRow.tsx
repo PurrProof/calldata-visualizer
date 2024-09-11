@@ -18,17 +18,18 @@ const renderChunkRow = (
   chunk: Uint8Array,
   currentOffset: number,
   word: AbiWord,
-  coders: Coder[],
   selectedCoders: number[],
   hoveredParamId: number | null,
-  innerCoderId: number
+  bgColor: string | null
 ) => (
   <div
     key={`word${formatOffset(currentOffset)}`}
     id={`word${formatOffset(currentOffset)}`}
     className="row"
   >
-    <div className="column word">{hexlify(chunk)}</div>
+    <div className="column word"
+      style={bgColor ? { backgroundColor: bgColor, borderColor: bgColor } : undefined}
+    >{hexlify(chunk)}</div>
 
     <div className="column offset">
       {word.role && <span className={`tag ${word.role}`}>{word.role}</span>}
@@ -69,7 +70,7 @@ const AbiWordRow = ({ word, offset }: IAbiWordRowProps) => {
     const coders: Coder[] = decodedData?.accum.coders || [];
     const selectedCoders = selectedIds.filter(id => word.coders.includes(id)).sort((a, b) => a - b);
     const innerCoderId = word.coders[word.coders.length - 1];
-
+    const bgColor = selectedIds.includes(innerCoderId) ? getColor(innerCoderId) : null;
     const rowList = [];
     let rest = word.data;
     let currentOffset = offset;
@@ -79,7 +80,7 @@ const AbiWordRow = ({ word, offset }: IAbiWordRowProps) => {
       rest = rest.slice(32);
 
       rowList.push(
-        renderChunkRow(chunk, currentOffset, word, coders, selectedCoders, hoveredParamId, innerCoderId)
+        renderChunkRow(chunk, currentOffset, word, selectedCoders, hoveredParamId, bgColor)
       );
 
       currentOffset += 32;
