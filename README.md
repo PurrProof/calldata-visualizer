@@ -25,8 +25,25 @@ This tool is primarily for:
 
 ## How to Use
 
-1. **Enter Function Signature**: Type or paste the Solidity function signature, e.g., `function test((bytes[])[])`.
+1. **Enter Function Signature**: Type or paste the Solidity function signature, e.g., `function test(string)`.
 2. **Enter Calldata**: Paste the hexadecimal calldata string in the provided field.
 3. **Decode**: Click the `Decode` button to view the visual representation of the calldata.
 4. **Inspect**: View offsets, counts, and other data related to the calldata structure.
 5. **Share**: Use the `Copy URL` button to share the visualization with others.
+
+## Credits
+
+This project is built using several open-source tools and libraries. I would like to give credit to the authors and maintainers of the following:
+
+- [Ethers.js](https://github.com/ethers-io/ethers.js) – Used for ABI decoding and interacting with Ethereum data. (a customized version was used).
+- [React](https://reactjs.org/) – The UI framework used to build the interactive application.
+- [React-xarrows](https://github.com/Eliav2/react-xarrows) – Used to draw arrows between elements in the visual representation of calldata.
+- [Zustand](https://github.com/pmndrs/zustand) – A lightweight state management library used to manage the application's state.
+- [And Design Colors](https://github.com/ant-design/ant-design-colors) - Color Palettes Calculator of Ant Design
+- [Copy-to-clipboard](https://github.com/sudodoki/copy-to-clipboard) – Enables the copy-to-clipboard functionality for sharing calldata and visualizations.
+
+### Other Dependencies
+
+In addition to the main tools listed above, this project also uses various other libraries and tools from the JavaScript/React ecosystem to provide additional functionality.
+
+I extend my thanks to the open-source community for their contributions and support!
