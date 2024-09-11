@@ -11,7 +11,7 @@ form.textarea {
 .abi-decoded-container {
   display: flex;
   width: 100%;
-  margin-top: 10px;
+  margin: 10px 0 20px 0;
 }
 
 .abi-decoded-data {
@@ -63,6 +63,7 @@ form.textarea {
   cursor: pointer;
   margin-bottom: 0;
   position: relative;
+  white-space: nowrap;
 }
 
 .param.anonymous::before {
@@ -109,6 +110,14 @@ form.textarea {
 
 .tag.length {
   background-color: #dd8bee;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: bold;
+  position: relative;
+  top: 5px;
+  left: -10px;
 }
 
 .examples {

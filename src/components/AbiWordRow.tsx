@@ -5,6 +5,7 @@ import { hexlify } from "ethers";
 import Xarrow from "react-xarrows";
 import useStore from '../store/store';
 import type { Coder, AbiWord } from "ethers";
+import { ethers } from "ethers";
 
 interface IAbiWordRowProps {
   word: AbiWord;
@@ -21,23 +22,44 @@ const renderChunkRow = (
   selectedCoders: number[],
   hoveredParamId: number | null,
   bgColor: string | null
-) => (
-  <div
-    key={`word${formatOffset(currentOffset)}`}
-    id={`word${formatOffset(currentOffset)}`}
-    className="row"
-  >
-    <div className="column word"
-      style={bgColor ? { backgroundColor: bgColor, borderColor: bgColor } : undefined}
-    >{hexlify(chunk)}</div>
+) => {
+  const innerCoderId = word.coders[word.coders.length - 1];
+  return (
+    <div
+      key={`word${formatOffset(currentOffset)}`}
+      id={`word${formatOffset(currentOffset)}`}
+      className="row"
+    >
+      <div
+        className="column word"
+        style={bgColor ? { backgroundColor: bgColor, borderColor: bgColor } : undefined}
+      >
+        {hexlify(chunk)}
+      </div>
 
-    <div className="column offset">
-      {word.role && <span className={`tag ${word.role}`}>{word.role}</span>}
-      {formatOffset(currentOffset)} — {formatOffset(currentOffset + 31)}
-    </div>
+      <div id={`offset${formatOffset(currentOffset)}`} className="column offset">
+        {word.role && <span className={`tag ${word.role}`}>{word.role}</span>}
+        {formatOffset(currentOffset)} — {formatOffset(currentOffset + 31)}
+        {/* Render extra Xarrow when word.role === 'offset' */}
+        {word.role === 'offset' && bgColor && (
+          <Xarrow
+            start={`offset${formatOffset(word.parentOffset)}`}
+            end={`offset${formatOffset(word.parentOffset + parseInt(hexlify(chunk), 16))}`}
+            startAnchor={{ position: "right", offset: { y: -19 } }}
+            endAnchor="right"
+            color={bgColor}
+            path="grid"
+            gridBreak={(-15 - innerCoderId * 5).toString()}
+            strokeWidth={2}
+            labels={{ end: <div className="label" style={{ color: bgColor }}>{"0x" + ethers.toNumber(chunk).toString(16)}</div> }}
+          //labels=
+          />
+        )}
 
-    {
-      selectedCoders.map((id, index) => {
+      </div>
+
+      {/* Render Xarrows for selected coders */}
+      {selectedCoders.map((id, index) => {
         const startId = `param${id}`;
         const endId = `word${formatOffset(currentOffset)}`;
 
@@ -54,10 +76,10 @@ const renderChunkRow = (
             />
           </Fragment>
         );
-      })
-    }
-  </div >
-);
+      })}
+    </div>
+  );
+};
 
 const AbiWordRow = ({ word, offset }: IAbiWordRowProps) => {
   const { selectedIds, hoveredParamId, decodedData } = useStore((state) => ({
