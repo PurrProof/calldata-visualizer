@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/calldata-visualizer/static/css/main.d3cf4c7e.css",
+    "main.js": "/calldata-visualizer/static/js/main.18a6f390.js",
+    "static/js/367.defe86eb.chunk.js": "/calldata-visualizer/static/js/367.defe86eb.chunk.js",
+    "index.html": "/calldata-visualizer/index.html",
+    "main.d3cf4c7e.css.map": "/calldata-visualizer/static/css/main.d3cf4c7e.css.map",
+    "main.18a6f390.js.map": "/calldata-visualizer/static/js/main.18a6f390.js.map",
+    "367.defe86eb.chunk.js.map": "/calldata-visualizer/static/js/367.defe86eb.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d3cf4c7e.css",
+    "static/js/main.18a6f390.js"
+  ]
+}
