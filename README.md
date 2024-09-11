@@ -48,7 +48,7 @@ This project uses `pnpm` as the package manager for faster and more efficient de
 
 This project is built using several open-source tools and libraries. I would like to give credit to the authors and maintainers of the following:
 
-- [Ethers.js](https://github.com/ethers-io/ethers.js) – Used for ABI decoding and interacting with Ethereum data. (a customized version was used).
+- [Ethers.js](https://github.com/ethers-io/ethers.js) – Used for ABI decoding and interacting with Ethereum data (a customized version was used).
 - [React](https://reactjs.org/) – The UI framework used to build the interactive application.
 - [Create-React-app](https://github.com/facebook/create-react-app) – Create React apps with no build configuration.
 - [React-xarrows](https://github.com/Eliav2/react-xarrows) – Used to draw arrows between elements in the visual representation of calldata.
