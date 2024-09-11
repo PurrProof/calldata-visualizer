@@ -28,14 +28,10 @@ const renderChunkRow = (
     id={`word${formatOffset(currentOffset)}`}
     className="row"
   >
-    <div className="column word">
-      <div className="chunk">{hexlify(chunk)}</div>
-      <div className="tags">
-        {word.role && <span className={`tag ${word.role}`}>{word.role}</span>}
-      </div>
-    </div>
+    <div className="column word">{hexlify(chunk)}</div>
 
     <div className="column offset">
+      {word.role && <span className={`tag ${word.role}`}>{word.role}</span>}
       {formatOffset(currentOffset)} — {formatOffset(currentOffset + 31)}
     </div>
 

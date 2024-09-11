@@ -36,18 +36,18 @@ form.textarea {
 
 .column.word {
   padding: 12px 5px 12px 12px;
-  position: relative;
   border-right: none;
-}
-
-.column.word .tags {
-  position: absolute;
-  bottom: 0;
-  right: 0;
 }
 
 .column.offset {
   white-space: nowrap;
+  position: relative;
+}
+
+.column.offset .tag {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .param-group {
@@ -95,20 +95,20 @@ form.textarea {
   font-size: 10px;
   background-color: #ccc;
   margin-left: 0px;
-  min-width: 50px;
+  min-width: 45px;
   text-align: center;
 }
 
 .tag.offset {
-  background-color: #4A90E2;
+  background-color: #7eb1eb;
 }
 
 .tag.count {
-  background-color: #50E3C2;
+  background-color: #71ecd2;
 }
 
 .tag.length {
-  background-color: #BD10E0;
+  background-color: #dd8bee;
 }
 
 .examples {
