@@ -31,12 +31,26 @@ This tool is primarily for:
 4. **Inspect**: View offsets, counts, and other data related to the calldata structure.
 5. **Share**: Use the `Copy URL` button to share the visualization with others.
 
+## How to Run Locally
+
+To run the project locally, follow these steps:
+
+```bash
+git clone git@github.com:PurrProof/calldata-visualizer.git
+cd calldata-visualizer
+pnpm i
+pnpm start
+```
+
+This project uses `pnpm` as the package manager for faster and more efficient dependency management. If you prefer using another package manager, simply replace `pnpm` with `npm`, `yarn`, or any other package manager you prefer in the commands above.
+
 ## Credits
 
 This project is built using several open-source tools and libraries. I would like to give credit to the authors and maintainers of the following:
 
 - [Ethers.js](https://github.com/ethers-io/ethers.js) – Used for ABI decoding and interacting with Ethereum data. (a customized version was used).
 - [React](https://reactjs.org/) – The UI framework used to build the interactive application.
+- [Create-React-app][https://github.com/facebook/create-react-app] – Create React apps with no build configuration.
 - [React-xarrows](https://github.com/Eliav2/react-xarrows) – Used to draw arrows between elements in the visual representation of calldata.
 - [Zustand](https://github.com/pmndrs/zustand) – A lightweight state management library used to manage the application's state.
 - [And Design Colors](https://github.com/ant-design/ant-design-colors) - Color Palettes Calculator of Ant Design
