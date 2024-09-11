@@ -30,7 +30,7 @@ const renderChunkRow = (
     className="row"
   >
     <div className="column word">
-      <div className="chunk">{`0x${hexlify(chunk)}`}</div>
+      <div className="chunk">{hexlify(chunk)}</div>
       <div className="tags">
         <span className="tag">{coders[innerCoderId]?.name}</span>
         <span className="tag">{coders[innerCoderId]?.dynamic ? "dynamic" : "static"}</span>
