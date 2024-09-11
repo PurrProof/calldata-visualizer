@@ -16,6 +16,7 @@ const Param = memo(({ node }: { node: AbiCodersTreeNode }) => {
   );
 
   const isSelected = selectedIds.includes(node.coderId);
+  const { name, type } = decodedData?.accum.coders[node.coderId] || {};
 
   return (
     <div
@@ -34,12 +35,12 @@ const Param = memo(({ node }: { node: AbiCodersTreeNode }) => {
       onMouseLeave={() => setHoveredParam(null)}
     >
 
-      <strong>{decodedData?.accum.coders[node.coderId].name}</strong> {decodedData?.accum.coders[node.coderId].type}
+      {name === type ? type : <><strong>{name}</strong> {type}</>}
 
       {/* don't render bar, because we set bg for now 
       isSelected && <Bar key={param.id} depth={0} id={param.id} align="right" />*/}
 
-      {node.children && node.children.length && <ParamGroup nodes={node.children} />}
+      {node.children && node.children.length > 0 && <ParamGroup nodes={node.children} />}
     </div >
   );
 });
