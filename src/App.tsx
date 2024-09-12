@@ -4,6 +4,8 @@ import Examples from './components/Examples';
 import ParamGroup from './components/ParamGroup';
 import AbiWordRow from './components/AbiWordRow';
 import CopyUrlButton from './components/CopyUrlButton';
+import Links from './components/Links';
+import Footer from './components/Footer';
 import useStore from './store/store';
 import type { AbiWord } from 'ethers';
 
@@ -37,33 +39,37 @@ const App = () => {
 
   return (
     <>
-      <h1>ABI CallData Visualizer</h1>
-      <Examples />
-      <InputFields />
-      <button onClick={decodeCalldata}>Decode</button >
-      <button onClick={clearAll}>Clear</button >
-      <button onClick={selectAllParams}>Select All</button >
-      <button onClick={resetSelection}>Deselect All</button >
-      <CopyUrlButton />
+      <main>
+        <h1>ABI CallData Visualizer</h1>
+        <Links />
+        <Examples />
+        <InputFields />
+        <button onClick={decodeCalldata}>Decode</button >
+        <button onClick={clearAll}>Clear</button >
+        <button onClick={selectAllParams}>Select All</button >
+        <button onClick={resetSelection}>Deselect All</button >
+        <CopyUrlButton />
 
-      {error && <div className="error">{error}</div>}
+        {error && <div className="error">{error}</div>}
 
-      {
-        decodedData && (
-          <div className="abi-decoded-container">
-            <div className="abi-decoded-params">
-              <ParamGroup nodes={decodedData.accum.codersTree.children} />
+        {
+          decodedData && (
+            <div className="abi-decoded-container">
+              <div className="abi-decoded-params">
+                <ParamGroup nodes={decodedData.accum.codersTree.children} />
+              </div>
+              <div className="abi-decoded-data">
+                {Array.from(decodedData.accum.words.entries()).map(
+                  ([offset, word]: [number, AbiWord]) => (
+                    <AbiWordRow key={offset} word={word} offset={offset} />
+                  )
+                )}
+              </div>
             </div>
-            <div className="abi-decoded-data">
-              {Array.from(decodedData.accum.words.entries()).map(
-                ([offset, word]: [number, AbiWord]) => (
-                  <AbiWordRow key={offset} word={word} offset={offset} />
-                )
-              )}
-            </div>
-          </div>
-        )
-      }
+          )
+        }
+      </main>
+      <Footer />
     </>
   );
 };

@@ -56,6 +56,7 @@ This project is built using several open-source tools and libraries. I would lik
 - [And Design Colors](https://github.com/ant-design/ant-design-colors) - Color Palettes Calculator of Ant Design
 - [Copy-to-clipboard](https://github.com/sudodoki/copy-to-clipboard) – Enables the copy-to-clipboard functionality for sharing calldata and visualizations.
 - [Pnpm](https://pnpm.io) – Fast, disk space efficient package manager.
+- [Flowbyte][https://github.com/themesberg/flowbite] – Icons
 
 ### Other Dependencies
 
