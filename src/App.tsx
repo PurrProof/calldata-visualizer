@@ -40,7 +40,7 @@ const App = () => {
   return (
     <>
       <main>
-        <h1>ABI CallData Visualizer</h1>
+        <h1>ABI CallData Visualizer / Decoder</h1>
         <Links />
         <Examples />
         <InputFields />
