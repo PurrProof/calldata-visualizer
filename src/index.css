@@ -78,6 +78,11 @@ footer span:last-child::after {
   height: 24x;
 }
 
+.top-links a.linkedin svg {
+  width: 28px;
+  height: 28px;
+}
+
 .abi-decoded-container {
   display: flex;
   width: 100%;
