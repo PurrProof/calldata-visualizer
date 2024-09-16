@@ -89,7 +89,10 @@ const useStore = create<StoreState>((set, get) => ({
     }
 
     try {
-      const result: IDecodedCalldata = abiDecodeCalldata(signature, calldata);
+      const fragment = signature.startsWith("function ")
+        ? signature
+        : `function ${signature}`;
+      const result: IDecodedCalldata = abiDecodeCalldata(fragment, calldata);
       setDecodedData(result);
       selectAllParams();
     } catch (error: unknown) {
@@ -119,7 +122,10 @@ const useStore = create<StoreState>((set, get) => ({
 
     try {
       validateHex(calldata);
-      validateFragment(signature);
+      const fragment = signature.startsWith("function ")
+        ? signature
+        : `function ${signature}`;
+      validateFragment(fragment);
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Invalid input.");
       return false;

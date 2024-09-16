@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 import type { IDecodedCalldata } from "../types/";
 
-export const abiDecodeCalldata = (
+const abiDecodeCalldata = (
   signature: string,
   calldata: string
 ): IDecodedCalldata => {
