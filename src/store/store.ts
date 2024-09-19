@@ -160,22 +160,19 @@ const useStore = create<StoreState>((set, get) => ({
 
     const { signature, calldata } = getUrlParams();
 
-    // this is normal situation for the start
-    if (signature === "" && calldata === "") {
-      return;
-    }
+    // design decision is don't keep url
+    clearUrl();
 
-    // pre-validate here, don't allow invalid values from url
-    if (!validateInputs(signature, calldata)) {
+    if (
+      (signature === "" && calldata === "") || // getUrlParams() may return empty parameters in case of some problems
+      !validateInputs(signature, calldata) // pre-validate here, don't allow invalid values from url
+    ) {
       return;
     }
 
     setSignature(signature);
     setCalldata(calldata);
     decodeCalldata();
-
-    // design decision is don't keep url
-    clearUrl();
   },
 }));
 
