@@ -33,6 +33,7 @@ const Param = memo(({ node }: { node: AbiCodersTreeNode }) => {
       onClick={(event) => { event.stopPropagation(); handleParamClick(node.coderId) }}
       onMouseOver={(event) => { event.stopPropagation(); setHoveredParam(node.coderId) }}
       onMouseLeave={() => setHoveredParam(null)}
+      title={type}
     >
 
       {name === type ? type : <><strong>{name}</strong> {type}</>}

@@ -89,6 +89,10 @@ footer span:last-child::after {
   margin: 10px 0 20px 0;
 }
 
+.abi-decoded-params {
+  max-width: 30%;
+}
+
 .abi-decoded-data {
   flex-grow: 1;
 }
@@ -126,10 +130,12 @@ footer span:last-child::after {
 }
 
 .param-group {
-  padding: 5px
+  padding: 5px;
 }
 
 .param {
+  overflow: hidden;
+  text-overflow: ellipsis;
   text-align: right;
   padding: 10px;
   border: 1px solid #ddd;

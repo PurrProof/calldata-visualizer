@@ -42,8 +42,8 @@ const renderChunkRow = (
         {formatOffset(currentOffset)} — {formatOffset(currentOffset + 31)}
         {/* Render extra Xarrow when word.role === 'offset' */}
         {word.role === 'offset' && bgColor && (
-          <Xarrow
-            start={`offset${formatOffset(word.parentOffset)}`}
+          < Xarrow
+            start={`offset${formatOffset(currentOffset)}`}
             end={`offset${formatOffset(word.parentOffset + parseInt(hexlify(chunk), 16))}`}
             startAnchor={{ position: "right", offset: { y: -19 } }}
             endAnchor="right"
@@ -52,6 +52,7 @@ const renderChunkRow = (
             gridBreak={(-15 - innerCoderId * 5).toString()}
             strokeWidth={2}
             labels={{ end: <div className="label" style={{ color: bgColor }}>{"0x" + ethers.toNumber(chunk).toString(16)}</div> }}
+            _extendSVGcanvas={20}
           />
         )}
 
@@ -61,7 +62,6 @@ const renderChunkRow = (
       {selectedCoders.map((id, index) => {
         const startId = `param${id}`;
         const endId = `word${formatOffset(currentOffset)}`;
-
         return (
           <Fragment key={id}>
             <Bar depth={index} id={id} align="left" />
