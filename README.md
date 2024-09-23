@@ -55,6 +55,7 @@ This project is built using several open-source tools and libraries. I would lik
 - [Zustand](https://github.com/pmndrs/zustand) – A lightweight state management library used to manage the application's state.
 - [And Design Colors](https://github.com/ant-design/ant-design-colors) - Color Palettes Calculator of Ant Design
 - [Copy-to-clipboard](https://github.com/sudodoki/copy-to-clipboard) – Enables the copy-to-clipboard functionality for sharing calldata and visualizations.
+- [lz-string](https://github.com/pieroxy/lz-string) - LZ-based compression algorithm for JavaScript.
 - [Pnpm](https://pnpm.io) – Fast, disk space efficient package manager.
 - [Flowbyte](https://github.com/themesberg/flowbite) – Nice icons.
 
