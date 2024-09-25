@@ -12,7 +12,7 @@ const abiDecodeCalldata = (
   const decoded = iface.decodeFunctionData(func, calldata);
   const accum = ethers.AbiCoder.defaultAbiCoder().getAccumulatedAbiWords();
 
-  return { decoded, accum };
+  return { selector: func.selector, decoded, accum };
 };
 
 export default abiDecodeCalldata;

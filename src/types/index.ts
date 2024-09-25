@@ -8,6 +8,7 @@ export interface IExample {
 }
 
 export interface IDecodedCalldata {
+  selector: string;
   decoded: any;
   accum: {
     words: AbiWordOffsetMap;

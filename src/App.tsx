@@ -59,6 +59,12 @@ const App = () => {
                 <ParamGroup nodes={decodedData.accum.codersTree.children} />
               </div>
               <div className="abi-decoded-data">
+                <div className="row">
+                  <div className="column selector">
+                    {decodedData.selector}
+                    <span className="tag selector">selector</span>
+                  </div>
+                </div>
                 {Array.from(decodedData.accum.words.entries()).map(
                   ([offset, word]: [number, AbiWord]) => (
                     <AbiWordRow key={offset} word={word} offset={offset} />

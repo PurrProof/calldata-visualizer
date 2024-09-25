@@ -8,7 +8,6 @@ form.textarea {
   -moz-osx-font-smoothing: grayscale;
 }
 
-
 html,
 body {
   height: 100%;
@@ -92,6 +91,7 @@ footer span:last-child::after {
 
 .abi-decoded-params {
   max-width: 30%;
+  padding-top: 30px;
 }
 
 .abi-decoded-data {
@@ -112,6 +112,18 @@ footer span:last-child::after {
 
 .row:last-child .column {
   border-bottom: 1px solid #ddd;
+}
+
+.column.selector {
+  background-color: #ddd;
+  position: relative;
+  min-width: 130px;
+}
+
+.column.selector .tag {
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .column.word {
@@ -180,6 +192,10 @@ footer span:last-child::after {
   margin-left: 0px;
   min-width: 45px;
   text-align: center;
+}
+
+.tag.selector {
+  background-color: #e99f5b;
 }
 
 .tag.offset {
